@@ -35,6 +35,7 @@ function createGameFormElements(gameDetails) {
 	homeTeamRadio.value = 'home'
     homeTeamRadio.id = `${homeTeamName}_${gameNumber}`; // Unique ID for the home team radio button
 	homeTeamRadio.style.marginTop = '3px';
+	homeTeamRadio.classList.add('tip-row')
 	  
     homeTeamLabel.setAttribute('for', `${homeTeamName}_${gameNumber}`); // Link label to radio button
 	homeTeamLabel.textContent = homeTeamName;
@@ -66,6 +67,7 @@ function createGameFormElements(gameDetails) {
 	awayTeamRadio.value = 'away'
     awayTeamRadio.id = `${awayTeamName}_${gameNumber}`; // Unique ID for the away team radio button
 	awayTeamRadio.style.marginTop = '3px';
+	awayTeamRadio.classList.add('tip-row')
 	  
     awayTeamLabel.setAttribute('for', `${awayTeamName}_${gameNumber}`); // Link label to radio button
 	awayTeamLabel.textContent = awayTeamName;
@@ -81,12 +83,22 @@ function createGameFormElements(gameDetails) {
     // Append the grid div to the email-form div
     emailFormDiv.appendChild(gridDiv);
 	
-	// Check team if tip exists
+	// Check if the user has already tipped a team
 	if (gameDetails.userTip === 1) {
 		homeTeamRadio.checked = true;
 	}
 	else if (gameDetails.userTip === 2) {
 		awayTeamRadio.checked = true;
+	}
+
+	// Disable radio buttons for games where tipping is closed
+	if (!gameDetails.isTippable) 
+	{
+		homeTeamRadio.disabled = true;
+		awayTeamRadio.disabled = true;
+		
+		homeTeamRadio.classList.add('is-disabled')
+		awayTeamRadio.classList.add('is-disabled')
 	}
 };
 
