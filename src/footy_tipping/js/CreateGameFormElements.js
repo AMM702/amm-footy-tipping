@@ -88,6 +88,13 @@ function createGameFormElements(gameDetails) {
 	else if (gameDetails.userTip === 2) {
 		awayTeamRadio.checked = true;
 	}
+
+	// Disable tipping for games where tipping is closed
+	if (!gameDetails.isTippable)
+	{
+		homeTeamRadio.disabled = true; 
+		awayTeamRadio.disabled = true;
+	}
 };
 
 window.CustomLibrary = window.CustomLibrary || {};
