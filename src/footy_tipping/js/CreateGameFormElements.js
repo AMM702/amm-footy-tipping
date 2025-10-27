@@ -3,6 +3,9 @@ function createGameFormElements(gameDetails) {
 	const homeTeamName = gameDetails.teams.home;
 	const awayTeamName = gameDetails.teams.away;
 	const gameNumber = gameDetails.gameNumber;
+
+	// Select the submit button div
+	const tippingSubmitDiv = document.getElementById('tipping-submit-div');
 	  
     // Select the tipping-form div
     const tippingFormDiv = document.getElementById('tipping-form');
@@ -79,7 +82,14 @@ function createGameFormElements(gameDetails) {
     gridDiv.appendChild(awayTeamDiv);
 
     // Append the grid div to the tipping-form div
-	tippingFormDiv.appendChild(gridDiv);
+	if (tippingSubmitDiv)
+	{
+		tippingFormDiv.insertBefore(gridDiv, tippingSubmitDiv);
+	}
+	else 
+	{
+		tippingFormDiv.appendChild(gridDiv);
+	}
 	
 	// Check if the user has already tipped a team
 	if (gameDetails.userTip === 1) {
