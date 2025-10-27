@@ -2,11 +2,3 @@
 	cursor: pointer;
 	font-weight: normal;
 }
-
-.tip-row.is-disabled {
-    opacity: 0.6;
-}
-
-.tip-row.is-disabled .gameTippingCursor {
-    cursor: not-allowed;
-}
