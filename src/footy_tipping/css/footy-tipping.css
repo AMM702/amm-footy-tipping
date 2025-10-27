@@ -2,8 +2,3 @@
 	cursor: pointer;
 	font-weight: normal;
 }
-
-#tipping-submit-button {
-  grid-column: 1 / -1;
-  justify-self: center;
-}
