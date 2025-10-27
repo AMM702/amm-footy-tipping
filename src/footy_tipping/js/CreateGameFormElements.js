@@ -22,7 +22,6 @@ function createGameFormElements(gameDetails) {
     // Create the first radio button and label for Home Team 
 	const homeTeamDiv = document.createElement('div');
 	homeTeamDiv.style.display = 'flex';
-	//homeTeamDiv.style.paddingRight = '20px';
 	homeTeamDiv.style.justifySelf = 'start';
 	  
     const homeTeamLabel = document.createElement('label');
@@ -33,6 +32,7 @@ function createGameFormElements(gameDetails) {
     const homeTeamRadio = document.createElement('input');
     homeTeamRadio.type = 'radio';
     homeTeamRadio.name = `${gameNumber}`;
+	homeTeamRadio.value = 'home'
     homeTeamRadio.id = `${homeTeamName}_${gameNumber}`; // Unique ID for the home team radio button
 	homeTeamRadio.style.marginTop = '3px';
 	  
@@ -63,6 +63,7 @@ function createGameFormElements(gameDetails) {
     const awayTeamRadio = document.createElement('input');
     awayTeamRadio.type = 'radio';
     awayTeamRadio.name = `${gameNumber}`;
+	awayTeamRadio.value = 'away'
     awayTeamRadio.id = `${awayTeamName}_${gameNumber}`; // Unique ID for the away team radio button
 	awayTeamRadio.style.marginTop = '3px';
 	  
