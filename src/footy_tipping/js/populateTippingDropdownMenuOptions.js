@@ -56,6 +56,15 @@ function populateTippingDropdownMenuOptions(gameData)
             }
         }
     };
+
+    // Default to the first round if no round is switched on
+    if (!hasSwitch)
+    {
+        const keys = Object.keys(gameData);
+        const round = gameData[keys[0]];
+
+        populateGameData(round, tippingForm, dropdownLabel);
+    }
 };
 
 function populateGameData(roundData, formID, labelID)
