@@ -2,7 +2,7 @@ function populateTippingDropdownMenuOptions(gameData)
 {
     const dropdownOptions = document.getElementById('tippingRoundListOptions');
     const dropdownLabel = document.getElementById('tippingRoundDisplayText');
-    const dropdownMenu = document.getElementById('tippingRoundDropdownToggle');
+    const dropdownMenu = document.getElementById('tippingRoundList');
     const tippingForm = document.getElementById('tipping-form');
 
     const slug = s => s.toLowerCase().trim().replace(/[\s\W]+/g, '-');
