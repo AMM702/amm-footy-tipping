@@ -42,10 +42,13 @@ function populateTippingDropdownMenuOptions(gameData)
                     round.matches.forEach(g => window.CustomLibrary.createGameFormElements(g));
 
                     // Simulate click
-                    if (dropdownToggle)
-                    {
-                        dropdownToggle.click();
-                    }
+                    const clickEvent = new MouseEvent('click', 
+                        {
+
+                        }
+                    );
+
+                    dropdownMenu.dispatchEvent(clickEvent);
                 }
             );
             dropdownOptions.appendChild(a);
