@@ -43,13 +43,17 @@ function populateTippingDropdownMenuOptions(gameData)
 
     // Auto select a round
     let hasSwitch = false;
-    for (const round in gameData)
+    for (const key in gameData)
     {
-        if (round.isRoundOn)
+        if (gameData.hasOwnProperty(key))
         {
-            populateGameData(round, tippingForm, dropdownLabel);
-            hasSwitch = true;
-            break;
+            const round = gameData[key];
+            if (round.isRoundOn)
+            {
+                populateGameData(round, tippingForm, dropdownLabel);
+                hasSwitch = true;
+                break;
+            }
         }
     };
 };
