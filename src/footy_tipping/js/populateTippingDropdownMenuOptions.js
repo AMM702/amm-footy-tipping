@@ -3,6 +3,7 @@ function populateTippingDropdownMenuOptions(gameData)
     const dropdownOptions = document.getElementById('tippingRoundListOptions');
     const dropdownLabel = document.getElementById('tippingRoundDisplayText');
     const dropdownMenu = document.getElementById('tippingRoundList');
+    const dropdownToggle = document.getElementById('tippingRoundDropdownToggle');
     const tippingForm = document.getElementById('tipping-form');
 
     const slug = s => s.toLowerCase().trim().replace(/[\s\W]+/g, '-');
@@ -41,10 +42,9 @@ function populateTippingDropdownMenuOptions(gameData)
                     round.matches.forEach(g => window.CustomLibrary.createGameFormElements(g));
 
                     // Simulate click
-                    const toggleMenu = dropdownMenu.querySelector('[data-w-dropdown-toggle]');
-                    if (toggleMenu)
+                    if (dropdownToggle)
                     {
-                        toggleMenu.click();
+                        dropdownToggle.click();
                     }
                 }
             );
