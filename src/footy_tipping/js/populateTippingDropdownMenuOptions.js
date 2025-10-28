@@ -36,8 +36,16 @@ function populateTippingDropdownMenuOptions(gameData)
                     // Update the dropdown menu label
                     dropdownLabel.textContent = round.name;
 
+                    // Remove existing games
+                    for (const child of tippingForm.children)
+                    {
+                        if (!child.id == 'tipping-submit-div')
+                        {
+                            child.remove();
+                        }
+                    };
+
                     // Create game elements
-                    tippingForm.innerHTML = ''; // Remove existing games
                     round.matches.forEach(g => window.CustomLibrary.createGameFormElements(g));
                 }
             );
