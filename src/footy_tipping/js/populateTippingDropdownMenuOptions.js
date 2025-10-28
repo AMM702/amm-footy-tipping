@@ -39,6 +39,13 @@ function populateTippingDropdownMenuOptions(gameData)
                     // Create game elements
                     tippingForm.innerHTML = ''; // Remove existing games
                     round.matches.forEach(g => window.CustomLibrary.createGameFormElements(g));
+
+                    // Simulate click
+                    const toggleMenu = dropdownMenu.querySelector('[data-w-dropdown-toggle]');
+                    if (toggleMenu)
+                    {
+                        toggleMenu.click();
+                    }
                 }
             );
             dropdownOptions.appendChild(a);
