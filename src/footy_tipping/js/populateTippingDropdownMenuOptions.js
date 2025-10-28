@@ -33,29 +33,34 @@ function populateTippingDropdownMenuOptions(gameData)
                     // Close the menu
                     dropdownMenu.classList.remove('w--open');
 
-                    // Update the dropdown menu label
-                    dropdownLabel.textContent = round.name;
-
-                    // Remove existing games
-                    const tippingFormChildren = Array.from(tippingForm.children);
-                    for (let i = 0; i < tippingFormChildren.length; i++)
-                    {
-                        const child = tippingFormChildren[i];
-
-                        if (child.id !== 'tipping-submit-div' && child.id !== 'tipping-submit-button')
-                        {
-                            child.remove();
-                        }
-                    };
-
-                    // Create game elements
-                    round.matches.forEach(g => window.CustomLibrary.createGameFormElements(g));
+                    // Add games to form
+                    populateGameData(round, tippingForm, dropdownLabel);
                 }
             );
             dropdownOptions.appendChild(a);
         }
     };
 };
+
+function populateGameData(roundData, formID, labelID)
+{
+    // Update dropdown menu label
+    labelID.textContent = roundData.name;
+
+    // Remove existing games
+    const tippingFormChildren = Array.from(formID.children);
+    for (let i = 0; i < tippingFormChildren.length; i++)
+    {
+        const child = tippingFormChildren[i]
+        if (child.id !== 'tipping-submit-div' && child.id !== 'tipping-submit-button')
+        {
+            child.remove();
+        }
+    };
+
+    // Create game elements
+    roundData.matches.forEach(g => window.CustomLibrary.createGameFormElements(g));
+}
 
 window.CustomLibrary = window.CustomLibrary || {};
 window.CustomLibrary.populateTippingDropdownMenuOptions = populateTippingDropdownMenuOptions;
