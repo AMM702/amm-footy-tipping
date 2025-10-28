@@ -41,7 +41,7 @@ function populateTippingDropdownMenuOptions(gameData)
                     {
                         if (!child.id == 'tipping-submit-div')
                         {
-                            child.remove();
+                            child.innerHTML = '';
                         }
                     };
 
