@@ -42,12 +42,12 @@ function populateTippingDropdownMenuOptions(gameData)
     };
 
     // Auto select a round
-    const hasSwitch = false;
+    let hasSwitch = false;
     for (const round in gameData)
     {
         if (round.isRoundOn)
         {
-            populateGameData(round);
+            populateGameData(round, tippingForm, dropdownLabel);
             hasSwitch = true;
             break;
         }
