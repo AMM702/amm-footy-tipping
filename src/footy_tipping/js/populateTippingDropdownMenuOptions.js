@@ -44,7 +44,7 @@ function populateTippingDropdownMenuOptions(gameData)
 
                         console.log(child.id);
 
-                        if (child.id !== 'tipping-form-submit' && child.id !== 'tipping-submit-button')
+                        if (child.id !== 'tipping-submit-div' && child.id !== 'tipping-submit-button')
                         {
                             child.remove();
                         }
