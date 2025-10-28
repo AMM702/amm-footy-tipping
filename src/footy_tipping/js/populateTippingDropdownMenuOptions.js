@@ -1,5 +1,3 @@
-import { createGameFormElements } from "./CreateGameFormElements";
-
 function populateTippingDropdownMenuOptions(gameData)
 {
     const dropdownOptions = document.getElementById('tippingRoundListOptions');
@@ -38,7 +36,7 @@ function populateTippingDropdownMenuOptions(gameData)
                     dropdownLabel.textContent = round.name;
 
                     // Create game elements
-                    round.matches.forEach(g => createGameFormElements(g));
+                    round.matches.forEach(g => window.CustomLibrary.createGameFormElements(g));
                 }
             );
             dropdownOptions.appendChild(a);

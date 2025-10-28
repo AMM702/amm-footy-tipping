@@ -1,4 +1,4 @@
-export function createGameFormElements(gameDetails) {
+function createGameFormElements(gameDetails) {
 	// Extract variables 
 	const homeTeamName = gameDetails.teams.home;
 	const awayTeamName = gameDetails.teams.away;
