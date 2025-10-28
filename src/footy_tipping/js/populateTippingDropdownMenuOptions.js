@@ -1,8 +1,12 @@
 import { createGameFormElements } from "./CreateGameFormElements";
 
+import { createGameFormElements } from "./CreateGameFormElements";
+
 function populateTippingDropdownMenuOptions(gameData)
 {
     const dropdownOptions = document.getElementById('tippingRoundListOptions');
+    const dropdownLabel = document.getElementById('tippingRoundDisplayText');
+    const dropdownMenu = document.getElementById('tippingRoundDropdownToggle');
     const dropdownLabel = document.getElementById('tippingRoundDisplayText');
     const dropdownMenu = document.getElementById('tippingRoundDropdownToggle');
 
@@ -18,6 +22,7 @@ function populateTippingDropdownMenuOptions(gameData)
         {
             const round = gameData[key];
             
+            // Create drop down menu option
             // Create drop down menu option
             const a = document.createElement('a');
             a.href = '#';
