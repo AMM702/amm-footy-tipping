@@ -1,6 +1,10 @@
+import { createGameFormElements } from "./CreateGameFormElements";
+
 function populateTippingDropdownMenuOptions(gameData)
 {
     const dropdownOptions = document.getElementById('tippingRoundListOptions');
+    const dropdownLabel = document.getElementById('tippingRoundDisplayText');
+    const dropdownMenu = document.getElementById('tippingRoundDropdownToggle');
 
     const slug = s => s.toLowerCase().trim().replace(/[\s\W]+/g, '-');
 
@@ -14,11 +18,28 @@ function populateTippingDropdownMenuOptions(gameData)
         {
             const round = gameData[key];
             
+            // Create drop down menu option
             const a = document.createElement('a');
             a.href = '#';
             a.className = 'w-dropdown-link username_display';
             a.textContent = round.name;
             a.id = `${slug(round.name)}`;
+
+            // Add event listener
+            a.addEventListener('click', function (event)
+                {
+                    event.preventDefault();
+
+                    // Close the menu
+                    dropdownMenu.classList.remove('w--open');
+
+                    // Update the dropdown menu label
+                    dropdownLabel.textContent = round.name;
+
+                    // Create game elements
+                    round.matches.forEach(g => createGameFormElements(g));
+                }
+            );
             dropdownOptions.appendChild(a);
         }
     };
