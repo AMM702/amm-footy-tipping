@@ -37,11 +37,14 @@ function populateTippingDropdownMenuOptions(gameData)
                     dropdownLabel.textContent = round.name;
 
                     // Remove existing games
-                    for (const child of tippingForm.children)
+                    const tippingFormChildren = Array.from(tippingForm.children);
+                    for (let i = 0; i < tippingFormChildren.length; i++)
                     {
-                        if (!child.id == 'tipping-submit-div')
+                        const child = tippingFormChildren[i];
+
+                        if (child.id !== 'tipping-form-submit')
                         {
-                            child.innerHTML = '';
+                            child.remove();
                         }
                     };
 
