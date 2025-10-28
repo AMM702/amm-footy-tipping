@@ -40,6 +40,18 @@ function populateTippingDropdownMenuOptions(gameData)
             dropdownOptions.appendChild(a);
         }
     };
+
+    // Auto select a round
+    const hasSwitch = false;
+    for (const round in gameData)
+    {
+        if (round.isRoundOn)
+        {
+            populateGameData(round);
+            hasSwitch = true;
+            break;
+        }
+    };
 };
 
 function populateGameData(roundData, formID, labelID)
