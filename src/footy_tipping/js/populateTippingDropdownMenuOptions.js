@@ -6,6 +6,7 @@ function populateTippingDropdownMenuOptions(gameData)
     const dropdownMenu = document.getElementById('tippingRoundList');
     const tippingForm = document.getElementById('tipping-form');
     const leagueLabel = document.getElementById('league-table-heading');
+    const hiddenScoreText = document.getElementById('league-table-hidden-score-text');
 
     const slug = s => s.toLowerCase().trim().replace(/[\s\W]+/g, '-');
 
@@ -37,6 +38,14 @@ function populateTippingDropdownMenuOptions(gameData)
 
                     // Add games to form
                     populateGameData(round, tippingForm, dropdownLabel, leagueLabel);
+
+                    // Display round scores
+                    const userScores = round.scores;
+                    if (!(userScores.length == 0))
+                    {
+                        hiddenScoreText.innerHTML = '';
+                        window.CustomLibrary.populateLeagueTable(userScores);
+                    }
                 }
             );
             dropdownOptions.appendChild(a);
