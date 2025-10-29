@@ -33,9 +33,6 @@ function populateTippingDropdownMenuOptions(gameData)
                 {
                     event.preventDefault();
 
-                    // Close the menu
-                    dropdownMenu.classList.remove('w--open');
-
                     // Add games to form
                     populateGameData(round, tippingForm, dropdownLabel, leagueLabel);
 
