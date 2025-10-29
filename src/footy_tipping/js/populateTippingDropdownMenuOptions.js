@@ -111,6 +111,10 @@ function displayLeagueTable(roundData)
         roundResultsDiv.innerHTML = '';
         window.CustomLibrary.populateLeagueTable(userScores);
     }
+    else if (roundResultsDiv !== '')
+    {
+        roundResultsDiv.innerHTML = '';
+    }
 };
 
 window.CustomLibrary = window.CustomLibrary || {};
