@@ -8,12 +8,9 @@
   border-collapse: collapse;
 }
 
-.custom-table .custom-row {
-  border: 1px solid #ccc;
-}
-
 .custom-table .custom-cell {
-  border: 1px solid #ccc;
   padding: 8px;
   text-align: center;
+
+  min-width: clamp(100px, 12vw, 160px);
 }
