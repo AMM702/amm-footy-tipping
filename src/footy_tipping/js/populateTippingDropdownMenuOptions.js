@@ -1,9 +1,12 @@
 function populateTippingDropdownMenuOptions(gameData)
 {
+    // Select elements to modify
     const dropdownOptions = document.getElementById('tippingRoundListOptions');
     const dropdownLabel = document.getElementById('tippingRoundDisplayText');
     const dropdownMenu = document.getElementById('tippingRoundList');
     const tippingForm = document.getElementById('tipping-form');
+    const leagueLabel = document.getElementById('league-table-heading');
+   
 
     const slug = s => s.toLowerCase().trim().replace(/[\s\W]+/g, '-');
 
@@ -34,7 +37,10 @@ function populateTippingDropdownMenuOptions(gameData)
                     dropdownMenu.classList.remove('w--open');
 
                     // Add games to form
-                    populateGameData(round, tippingForm, dropdownLabel);
+                    populateGameData(round, tippingForm, dropdownLabel, leagueLabel);
+
+                    // Display round scores
+                    displayLeagueTable(round);
                 }
             );
             dropdownOptions.appendChild(a);
@@ -50,7 +56,8 @@ function populateTippingDropdownMenuOptions(gameData)
             const round = gameData[key];
             if (round.isRoundOn)
             {
-                populateGameData(round, tippingForm, dropdownLabel);
+                populateGameData(round, tippingForm, dropdownLabel, leagueLabel);
+                displayLeagueTable(round);
                 hasSwitch = true;
                 break;
             }
@@ -64,13 +71,17 @@ function populateTippingDropdownMenuOptions(gameData)
         const round = gameData[keys[0]];
 
         populateGameData(round, tippingForm, dropdownLabel);
+        displayLeagueTable(round);
     }
 };
 
-function populateGameData(roundData, formID, labelID)
+function populateGameData(roundData, formID, labelID, leagueLabelID)
 {
     // Update dropdown menu label
     labelID.textContent = roundData.name;
+
+    // Update league label text
+    leagueLabelID.textContent = `League Table (${roundData.name})`;
 
     // Remove existing games
     const tippingFormChildren = Array.from(formID.children);
@@ -85,7 +96,26 @@ function populateGameData(roundData, formID, labelID)
 
     // Create game elements
     roundData.matches.forEach(g => window.CustomLibrary.createGameFormElements(g));
-}
+};
+
+function displayLeagueTable(roundData)
+{
+    const hiddenScoreText = document.getElementById('league-table-hidden-score-text');
+    const roundResultsDiv = document.getElementById('round-results-div');
+
+    // Display round scores
+    const userScores = roundData.scores;
+    if (!(userScores.length == 0))
+    {
+        hiddenScoreText.innerHTML = '';
+        roundResultsDiv.innerHTML = '';
+        window.CustomLibrary.populateLeagueTable(userScores);
+    }
+    else if (roundResultsDiv !== '')
+    {
+        roundResultsDiv.innerHTML = '';
+    }
+};
 
 window.CustomLibrary = window.CustomLibrary || {};
 window.CustomLibrary.populateTippingDropdownMenuOptions = populateTippingDropdownMenuOptions;
