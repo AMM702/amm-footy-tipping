@@ -25,7 +25,6 @@ function populateLeagueTable(roundData)
     // Insert data
     roundData.forEach(item => {
         const row = table.insertRow();
-        row.classList.add('custom-row');
 
         const usernameCell = row.insertCell();
         usernameCell.textContent = item.username;
