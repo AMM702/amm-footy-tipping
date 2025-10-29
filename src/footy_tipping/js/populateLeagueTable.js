@@ -23,9 +23,7 @@ function populateLeagueTable(roundData)
     headerRow.appendChild(headerScore);
 
     // Insert data
-    console.log(roundData);
     roundData.forEach(item => {
-        console.log(item);
         const row = table.insertRow();
         row.classList.add('custom-row');
 
