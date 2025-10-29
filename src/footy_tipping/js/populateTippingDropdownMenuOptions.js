@@ -101,12 +101,14 @@ function populateGameData(roundData, formID, labelID, leagueLabelID)
 function displayLeagueTable(roundData)
 {
     const hiddenScoreText = document.getElementById('league-table-hidden-score-text');
+    const roundResultsDiv = document.getElementById('round-results-div');
 
     // Display round scores
     const userScores = roundData.scores;
     if (!(userScores.length == 0))
     {
         hiddenScoreText.innerHTML = '';
+        roundResultsDiv.innerHTML = '';
         window.CustomLibrary.populateLeagueTable(userScores);
     }
 };
