@@ -6,7 +6,7 @@ function populateTippingDropdownMenuOptions(gameData)
     const dropdownMenu = document.getElementById('tippingRoundList');
     const tippingForm = document.getElementById('tipping-form');
     const leagueLabel = document.getElementById('league-table-heading');
-    const hiddenScoreText = document.getElementById('league-table-hidden-score-text');
+   
 
     const slug = s => s.toLowerCase().trim().replace(/[\s\W]+/g, '-');
 
@@ -40,12 +40,7 @@ function populateTippingDropdownMenuOptions(gameData)
                     populateGameData(round, tippingForm, dropdownLabel, leagueLabel);
 
                     // Display round scores
-                    const userScores = round.scores;
-                    if (!(userScores.length == 0))
-                    {
-                        hiddenScoreText.innerHTML = '';
-                        window.CustomLibrary.populateLeagueTable(userScores);
-                    }
+                    displayLeagueTable(round);
                 }
             );
             dropdownOptions.appendChild(a);
@@ -62,6 +57,7 @@ function populateTippingDropdownMenuOptions(gameData)
             if (round.isRoundOn)
             {
                 populateGameData(round, tippingForm, dropdownLabel, leagueLabel);
+                displayLeagueTable(round);
                 hasSwitch = true;
                 break;
             }
@@ -75,6 +71,7 @@ function populateTippingDropdownMenuOptions(gameData)
         const round = gameData[keys[0]];
 
         populateGameData(round, tippingForm, dropdownLabel);
+        displayLeagueTable(round);
     }
 };
 
@@ -99,7 +96,20 @@ function populateGameData(roundData, formID, labelID, leagueLabelID)
 
     // Create game elements
     roundData.matches.forEach(g => window.CustomLibrary.createGameFormElements(g));
-}
+};
+
+function displayLeagueTable(roundData)
+{
+    const hiddenScoreText = document.getElementById('league-table-hidden-score-text');
+
+    // Display round scores
+    const userScores = roundData.scores;
+    if (!(userScores.length == 0))
+    {
+        hiddenScoreText.innerHTML = '';
+        window.CustomLibrary.populateLeagueTable(userScores);
+    }
+};
 
 window.CustomLibrary = window.CustomLibrary || {};
 window.CustomLibrary.populateTippingDropdownMenuOptions = populateTippingDropdownMenuOptions;
