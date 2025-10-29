@@ -9,14 +9,18 @@ function populateLeagueTable(roundData)
     table.classList.add('custom-table');
 
     // Create header row 
-    const headerRow = table.insertRow();
-    const headerUsername = headerRow.insertCell();
+    const thead = table.createTHead();
+    const headerRow = thead.insertRow();
+
+    const headerUsername = document.createElement('th');
     headerUsername.textContent = 'Username';
     headerUsername.classList.add('custom-cell');
+    headerRow.appendChild(headerUsername);
 
-    const headerScore = headerRow.insertCell();
+    const headerScore = document.createElement('th');
     headerScore.textContent = 'Score';
     headerScore.classList.add('custom-cell');
+    headerRow.appendChild(headerScore);
 
     // Insert data
     console.log(roundData);
