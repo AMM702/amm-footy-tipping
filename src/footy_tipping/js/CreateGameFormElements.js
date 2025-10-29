@@ -48,6 +48,32 @@ function createGameFormElements(gameDetails) {
     // Create the text for the second column
     const matchInfo = document.createElement('span');
     matchInfo.textContent = `Game ${gameNumber} @ ${gameDetails.ground} (${gameDetails.time} ${gameDetails.date})`
+
+	// Append the result of the game if it is available
+	if (gameDetails.userTip === 1)
+	{
+		if (gameDetails.result === 1)
+		{
+			matchInfo.textContent += ' ✅';
+		}
+		else if (gameDetails.result === 2)
+		{
+			matchInfo.textContent += ' ❌';
+		}
+	}
+	else if (gameDetails.userTip === 2)
+	{
+		if (gameDetails.result === 2)
+		{
+			matchInfo.textContent += ' ✅';
+		}
+		else if (gameDetails.result === 1)
+		{
+			matchInfo.textContent += ' ❌';
+		}
+	}
+
+	// Style the text
 	matchInfo.style.paddingTop = '3px';
 	matchInfo.style.justifySelf = 'center';
 	matchInfo.style.fontWeight = 'bold';
