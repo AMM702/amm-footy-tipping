@@ -20,7 +20,10 @@ function populateLeagueTable(roundData)
 
     // Insert data
     const data = roundData.scores;
+    console.log(roundData);
+    console.log(data)
     data.forEach(item => {
+        console.log(item);
         const row = table.insertRow();
         row.classList.add('custom-row');
 
