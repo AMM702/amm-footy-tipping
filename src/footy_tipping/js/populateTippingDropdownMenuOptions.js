@@ -1,9 +1,11 @@
 function populateTippingDropdownMenuOptions(gameData)
 {
+    // Select elements to modify
     const dropdownOptions = document.getElementById('tippingRoundListOptions');
     const dropdownLabel = document.getElementById('tippingRoundDisplayText');
     const dropdownMenu = document.getElementById('tippingRoundList');
     const tippingForm = document.getElementById('tipping-form');
+    const leagueLabel = document.getElementById('league-table-heading');
 
     const slug = s => s.toLowerCase().trim().replace(/[\s\W]+/g, '-');
 
@@ -34,7 +36,7 @@ function populateTippingDropdownMenuOptions(gameData)
                     dropdownMenu.classList.remove('w--open');
 
                     // Add games to form
-                    populateGameData(round, tippingForm, dropdownLabel);
+                    populateGameData(round, tippingForm, dropdownLabel, leagueLabel);
                 }
             );
             dropdownOptions.appendChild(a);
@@ -50,7 +52,7 @@ function populateTippingDropdownMenuOptions(gameData)
             const round = gameData[key];
             if (round.isRoundOn)
             {
-                populateGameData(round, tippingForm, dropdownLabel);
+                populateGameData(round, tippingForm, dropdownLabel, leagueLabel);
                 hasSwitch = true;
                 break;
             }
@@ -67,10 +69,13 @@ function populateTippingDropdownMenuOptions(gameData)
     }
 };
 
-function populateGameData(roundData, formID, labelID)
+function populateGameData(roundData, formID, labelID, leagueLabelID)
 {
     // Update dropdown menu label
     labelID.textContent = roundData.name;
+
+    // Update league label text
+    leagueLabelID.textContent = `League Table (${roundData.name})`;
 
     // Remove existing games
     const tippingFormChildren = Array.from(formID.children);
