@@ -11,4 +11,6 @@
 .custom-table .custom-cell {
   padding: 8px;
   text-align: center;
+
+  min-width: clamp(100px, 12vw, 160px);
 }
