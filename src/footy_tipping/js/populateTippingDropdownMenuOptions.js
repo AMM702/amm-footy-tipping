@@ -92,8 +92,53 @@ function populateGameData(roundData, formID, labelID, leagueLabelID)
     };
 
     // Create game elements
+    displayHomeAwayHeader();
     roundData.matches.forEach(g => window.CustomLibrary.createGameFormElements(g));
 };
+
+function displayHomeAwayHeader()
+{
+    const gridParent = document.getElementById('tipping-form')
+    const tippingSubmitDiv = document.getElementById('tipping-submit-div');
+
+    // Create grid
+    const gridDiv = document.createElement('div');
+    gridDiv.classList.add('game-details-div');
+
+    // Create Home label
+    const homeLabel = document.createElement('span');
+    homeLabel.textContent = 'Home Team';
+    homeLabel.classList.add('game-details-text-header');
+    homeLabel.style.justifySelf = 'start';
+
+    // Create Game Label
+    const gameLabel = document.createElement('span');
+    gameLabel.textContent = 'Game Details';
+    gameLabel.classList.add('game-details-text-header');
+    gameLabel.style.justifySelf = 'center';
+
+    // Create Away Label
+    const awayLabel = document.createElement('span');
+    awayLabel.textContent = 'Away Team';
+    awayLabel.classList.add('game-details-text-header');
+    awayLabel.style.justifySelf = 'start';
+    awayLabel.style.marginLeft = '50px';
+
+    // Add labels to grid
+    gridDiv.appendChild(homeLabel);
+    gridDiv.appendChild(gameLabel);
+    gridDiv.appendChild(awayLabel);
+
+    // Add grid to main form
+    if (gridParent)
+	{
+		gridParent.insertBefore(gridDiv, tippingSubmitDiv);
+	}
+	else 
+	{
+		gridParent.appendChild(gridDiv);
+	}
+}
 
 function displayLeagueTable(roundData)
 {

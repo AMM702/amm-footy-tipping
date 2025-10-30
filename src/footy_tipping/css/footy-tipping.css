@@ -14,3 +14,17 @@
 
   min-width: clamp(100px, 12vw, 160px);
 }
+
+.game-details-div {
+  display: grid;
+  grid-template-columns: 200px 500px 200px;
+  gap: 16px;
+  align-items: center;
+  justify-items: center;
+  margin-top: 10px;
+}
+
+.game-details-text-header {
+  padding-top: 3px;
+  font-weight: bold;
+}
