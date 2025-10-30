@@ -104,6 +104,7 @@ function displayHomeAwayHeader()
     // Create grid
     const gridDiv = document.createElement('div');
     gridDiv.classList.add('game-details-div');
+    gridDiv.style.marginTop = '0px';
 
     // Create Home label
     const homeLabel = document.createElement('span');
