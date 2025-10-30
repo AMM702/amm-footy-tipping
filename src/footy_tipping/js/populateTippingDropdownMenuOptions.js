@@ -122,6 +122,7 @@ function displayHomeAwayHeader()
     awayLabel.textContent = 'Away Team';
     awayLabel.classList.add('game-details-text-header');
     awayLabel.style.justifySelf = 'start';
+    awayLabel.style.marginLeft = '50px';
 
     // Add labels to grid
     gridDiv.appendChild(homeLabel);
