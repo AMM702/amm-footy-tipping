@@ -26,6 +26,7 @@
 
 .game-details-text-header {
   padding-top: 3px;
-  justify-self: center;
+  justify-self: start;
   font-weight: bold;
+  text-decoration: underline;
 }

@@ -109,6 +109,7 @@ function displayHomeAwayHeader()
     const homeLabel = document.createElement('span');
     homeLabel.textContent = 'Home Team';
     homeLabel.classList.add('game-details-text-header');
+    homeLabel.style.justifySelf = 'center';
 
     // Create Game Label
     const gameLabel = document.createElement('span');
