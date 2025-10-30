@@ -13,14 +13,7 @@ function createGameFormElements(gameDetails) {
     // Create a new div to hold the grid layout
     const gridDiv = document.createElement('div');
 	gridDiv.id = `game-${gameDetails.gameID}`;
-
-    // Apply grid layout styles to the new div
-    gridDiv.style.display = 'grid';
-    gridDiv.style.gridTemplateColumns = '200px 500px 200px'; 
-    gridDiv.style.gap = '16px'; 
-    gridDiv.style.alignItems = 'center'; 
-    gridDiv.style.justifyItems = 'center'; 
-	gridDiv.style.marginTop = '10px';
+	gridDiv.classList.add('game-details-div');
 
     // Create the first radio button and label for Home Team 
 	const homeTeamDiv = document.createElement('div');
