@@ -14,6 +14,7 @@ function adminDisplayUserDetails(userData)
 
     // Create table 
     const table = document.createElement('table');    
+    table.classList.add('custom-table');
 
     // Create header row
     const tableHeaders = ['First Name', 'Surname', 'Email', 'Username'];
@@ -23,6 +24,7 @@ function adminDisplayUserDetails(userData)
     tableHeaders.forEach(header => {
         const headerElement = document.createElement('th');
         headerElement.textContent = header;
+        headerElement.classList.add('custom-cell');
         headerRow.appendChild(headerElement);
     });
 
@@ -35,6 +37,7 @@ function adminDisplayUserDetails(userData)
             {
                 const cell = row.insertCell();
                 cell.textContent = user[key];
+                cell.classList.add('custom-cell')
             }
         });
     });
