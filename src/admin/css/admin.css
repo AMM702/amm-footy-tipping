@@ -8,3 +8,8 @@
   text-align: left;
   min-width: clamp(100px, 12vw, 160px);
 }
+
+.custom-table thead {
+  background-color: black;
+  color: white;
+}
