@@ -4,7 +4,7 @@ function adminDisplayUserDetails(userData)
     const usersDiv = document.getElementById('users-display-div');
     usersDiv.innerHTML = '';
 
-    if (!userData)
+    if (userData.length === 0)
     {
         const missingText = document.createElement('p');
         missingText.textContent = 'No data available';
