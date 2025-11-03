@@ -5,7 +5,6 @@
 
 .custom-table .custom-cell {
   padding: 8px;
-  text-align: center;
-
+  text-align: left;
   min-width: clamp(100px, 12vw, 160px);
 }
