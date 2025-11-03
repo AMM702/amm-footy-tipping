@@ -20,7 +20,7 @@ function populateUserDropdownOptions(userData)
         a.id = state;
 
         // Select data
-        stateData = userData[state];
+        const stateData = userData[state];
         console.log(stateData);
 
         // Add event listener
