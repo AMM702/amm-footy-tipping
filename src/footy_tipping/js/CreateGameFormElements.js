@@ -3,6 +3,7 @@ function createGameFormElements(gameDetails) {
 	const homeTeamName = gameDetails.teams.home;
 	const awayTeamName = gameDetails.teams.away;
 	const gameNumber = gameDetails.gameNumber;
+	const gameID = gameDetails.gameID;
 
 	// Select the submit button div
 	const tippingSubmitDiv = document.getElementById('tipping-submit-div');
@@ -27,7 +28,7 @@ function createGameFormElements(gameDetails) {
 	  
     const homeTeamRadio = document.createElement('input');
     homeTeamRadio.type = 'radio';
-    homeTeamRadio.name = `${gameNumber}`;
+    homeTeamRadio.name = `${gameID}`;
 	homeTeamRadio.value = 'home'
     homeTeamRadio.id = `${homeTeamName}_${gameNumber}`; // Unique ID for the home team radio button
 	homeTeamRadio.style.marginTop = '3px';
@@ -84,7 +85,7 @@ function createGameFormElements(gameDetails) {
 	  
     const awayTeamRadio = document.createElement('input');
     awayTeamRadio.type = 'radio';
-    awayTeamRadio.name = `${gameNumber}`;
+    awayTeamRadio.name = `${gameID}`;
 	awayTeamRadio.value = 'away'
     awayTeamRadio.id = `${awayTeamName}_${gameNumber}`; // Unique ID for the away team radio button
 	awayTeamRadio.style.marginTop = '3px';
