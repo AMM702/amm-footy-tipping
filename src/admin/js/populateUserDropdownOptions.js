@@ -1,4 +1,4 @@
-function populateUserDropdownOptions() 
+function populateUserDropdownOptions(userData) 
 {
     // Select dropdown menu elements
     const dropdownOptions = document.getElementById('users-dropdown-options');
@@ -19,6 +19,9 @@ function populateUserDropdownOptions()
         a.textContent = state;
         a.id = state;
 
+        // Select data
+        stateData = userData[state];
+
         // Add event listener
         a.addEventListener('click', function (event)
             {
@@ -28,7 +31,7 @@ function populateUserDropdownOptions()
                 dropdownLabel.textContent = state;
 
                 // Change displayed table
-                // Add logic here
+                adminDisplayUserDetails(stateData);
             });
         dropdownOptions.appendChild(a);
     });
