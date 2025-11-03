@@ -55,6 +55,7 @@ function adminDisplayUserDetails(userData)
         const deleteUserButton = document.createElement('button');
         deleteUserButton.textContent = 'Delete User';
         deleteUserButton.classList.add('user-button');
+        deleteUserButton.classList.add('delete-button');
         actionCell.appendChild(deleteUserButton);
     });
 
