@@ -16,6 +16,13 @@ function createGameFormElements(gameDetails) {
 	gridDiv.id = `game-${gameDetails.gameID}`;
 	gridDiv.classList.add('game-details-div');
 
+	// Create hidden input 
+	const hiddenInput = document.createElement('input');
+	hiddenInput.type = 'hidden';
+	hiddenInput.name = `${gameID}`;
+	hiddenInput.value = 'none';
+	hiddenInput.id = `hidden_${gameID}`;
+
     // Create the first radio button and label for Home Team 
 	const homeTeamDiv = document.createElement('div');
 	homeTeamDiv.style.display = 'flex';
@@ -125,6 +132,24 @@ function createGameFormElements(gameDetails) {
 		homeTeamRadio.disabled = true; 
 		awayTeamRadio.disabled = true;
 	}
+
+	[homeTeamRadio, awayTeamRadio].forEach(radio => {
+		radio.addEventListener('click', () => {
+			const hidden = document.getElementById(`hidden_${gameID}`);
+			if (radio.previousChecked)
+			{
+				radio.checked = false;
+				radio.previousChecked = false;
+				hidden.value = "none";
+			}
+			else 
+			{
+				document.querySelectorAll(`input[name="${gameID}"]`).forEach(r => r.previousChecked = false);
+				radio.previousChecked = true;
+				hidden.value = radio.value;
+			}
+		});
+	});
 };
 
 window.CustomLibrary = window.CustomLibrary || {};
