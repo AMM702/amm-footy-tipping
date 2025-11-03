@@ -5,7 +5,7 @@ function populateUserDropdownOptions()
     const dropdownLabel = document.getElementById('users-dropdown-text');
 
     // Define array of states
-    const states = ['QLD','NSW','VIC','SA'];
+    const states = ['QLD','NSW','VIC','WA'];
 
     // Clear existing elements
     dropdownOptions.innerHTML = '';
