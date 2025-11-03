@@ -56,12 +56,29 @@ function adminDisplayUserDetails(userData)
         deleteUserButton.textContent = 'Delete User';
         deleteUserButton.classList.add('user-button');
         deleteUserButton.classList.add('delete-button');
+        addDeleteButtonListener(deleteUserButton, user['tippingID'], user['userName']);
         actionCell.appendChild(deleteUserButton);
     });
 
     // Append table to div
     usersDiv.appendChild(table);
 };
+
+function deleteUser(userID, userName)
+{
+    let hasApproved = confirm(`Are you sure you want to delete the user ${userName}?`);
+    if (hasApproved)
+    {
+        alert('User deleted.');
+    }
+}
+
+function addDeleteButtonListener(btn, userID, userName)
+{
+    btn.addEventListener("click", function() {
+        deleteUser(userID, userName);
+    });
+}
 
 window.CustomLibrary = window.CustomLibrary || {};
 window.CustomLibrary.adminDisplayUserDetails = adminDisplayUserDetails;
