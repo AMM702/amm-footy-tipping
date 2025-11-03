@@ -29,7 +29,7 @@ function createGameFormElements(gameDetails) {
     const homeTeamRadio = document.createElement('input');
     homeTeamRadio.type = 'radio';
     homeTeamRadio.name = `${gameID}`;
-	homeTeamRadio.value = 'home'
+	homeTeamRadio.value = 'home';
     homeTeamRadio.id = `${homeTeamName}_${gameNumber}`; // Unique ID for the home team radio button
 	homeTeamRadio.style.marginTop = '3px';
 	  
@@ -86,7 +86,7 @@ function createGameFormElements(gameDetails) {
     const awayTeamRadio = document.createElement('input');
     awayTeamRadio.type = 'radio';
     awayTeamRadio.name = `${gameID}`;
-	awayTeamRadio.value = 'away'
+	awayTeamRadio.value = 'away';
     awayTeamRadio.id = `${awayTeamName}_${gameNumber}`; // Unique ID for the away team radio button
 	awayTeamRadio.style.marginTop = '3px';
 	  
