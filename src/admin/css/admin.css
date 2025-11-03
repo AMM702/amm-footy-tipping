@@ -9,7 +9,7 @@
   min-width: clamp(100px, 12vw, 160px);
 }
 
-.custom-table thead {
-  background-color: black;
+.custom-table th {
+  background-color: grey;
   color: white;
 }
