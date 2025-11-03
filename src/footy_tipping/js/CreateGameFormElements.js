@@ -140,18 +140,17 @@ function createGameFormElements(gameDetails) {
 
 	[homeTeamRadio, awayTeamRadio].forEach(radio => {
 		radio.addEventListener('click', () => {
-			const hidden = document.getElementById(`hidden_${gameID}`);
 			if (radio.previousChecked)
 			{
 				radio.checked = false;
 				radio.previousChecked = false;
-				hidden.value = "none";
+				hiddenInput.value = "none";
 			}
 			else 
 			{
 				document.querySelectorAll(`input[name="${gameID}"]`).forEach(r => r.previousChecked = false);
 				radio.previousChecked = true;
-				hidden.value = radio.value;
+				hiddenInput.value = radio.value;
 			}
 		});
 	});
