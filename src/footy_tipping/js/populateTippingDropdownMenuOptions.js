@@ -21,7 +21,6 @@ function populateTippingDropdownMenuOptions(gameData)
             const round = gameData[key];
             
             // Create drop down menu option
-            // Create drop down menu option
             const a = document.createElement('a');
             a.href = '#';
             a.className = 'w-dropdown-link username_display';

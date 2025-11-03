@@ -1,0 +1,30 @@
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.custom-table .custom-cell {
+  padding: 8px;
+  text-align: left;
+  min-width: clamp(100px, 12vw, 160px);
+}
+
+.custom-table th {
+  background-color: steelblue;
+  color: white;
+}
+
+.user-button {
+  background-color: var(--ammgreen);
+  margin-right: 10px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  color: white;
+  padding: 5px;
+}
+
+.delete-button {
+  background-color: darkorange;
+}

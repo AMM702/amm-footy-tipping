@@ -1,7 +1,6 @@
 function populateLeagueTable(roundData)
 {
     // Define element ID constants
-    
     const roundResultsDiv = document.getElementById('round-results-div');
 
     // Create table
