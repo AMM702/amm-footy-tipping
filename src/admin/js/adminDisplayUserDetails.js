@@ -18,6 +18,19 @@ function adminDisplayUserDetails(userData)
         headerRow.appendChild(headerElement);
     });
 
+    // Display data
+    userData.forEach(user => {
+        const row = table.insertRow();
+
+        Object.keys(user).forEach(key => {
+            if (key !== 'tippingID')
+            {
+                const cell = row.insertCell();
+                cell.textContent = user[key];
+            }
+        });
+    });
+
     // Append table to div
     usersDiv.appendChild(table);
 };
