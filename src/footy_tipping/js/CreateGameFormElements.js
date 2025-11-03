@@ -122,10 +122,12 @@ function createGameFormElements(gameDetails) {
 	// Check if the user has already tipped a team
 	if (gameDetails.userTip === 1) {
 		homeTeamRadio.checked = true;
+		homeTeamRadio.previousChecked = true;
 		hiddenInput.value = homeTeamRadio.value;
 	}
 	else if (gameDetails.userTip === 2) {
 		awayTeamRadio.checked = true;
+		awayTeamRadio.previousChecked = true;
 		hiddenInput.value = awayTeamRadio.value;
 	}
 
