@@ -1,5 +1,6 @@
 function adminDisplayUserDetails(userData)
 {
+    console.log(userData);
     // Select table div and clear existing elements
     const usersDiv = document.getElementById('users-display-div');
     usersDiv.innerHTML = '';
