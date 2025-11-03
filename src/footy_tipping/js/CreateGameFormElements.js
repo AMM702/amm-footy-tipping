@@ -134,11 +134,10 @@ function createGameFormElements(gameDetails) {
 	}
 
 	[homeTeamRadio, awayTeamRadio].forEach(radio => {
-		radio.addEventListener('mousedown', (e) => {
+		radio.addEventListener('click', () => {
 			const hidden = document.getElementById(`hidden_${gameID}`);
 			if (radio.previousChecked)
 			{
-				e.preventDefault();
 				radio.checked = false;
 				radio.previousChecked = false;
 				hidden.value = "none";
