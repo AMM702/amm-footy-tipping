@@ -25,7 +25,7 @@ function populateUserDropdownOptions()
                 event.preventDefault();
 
                 // Change menu label
-                dropdownLabel.textContent = 'state';
+                dropdownLabel.textContent = state;
 
                 // Change displayed table
                 // Add logic here
