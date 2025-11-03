@@ -4,6 +4,14 @@ function adminDisplayUserDetails(userData)
     const usersDiv = document.getElementById('users-display-div');
     usersDiv.innerHTML = '';
 
+    if (!userData)
+    {
+        const missingText = document.createElement('p');
+        missingText.textContent = 'No data available';
+        usersDiv.appendChild(missingText);
+        return;
+    }
+
     // Create table 
     const table = document.createElement('table');    
 
