@@ -48,13 +48,13 @@ function adminDisplayUserDetails(userData)
         // Edit Password button - Logic not added yet
         const editPasswordButton = document.createElement('button');
         editPasswordButton.textContent = 'Edit Password';
-        editPasswordButton.classList.add('Submit Button');
+        editPasswordButton.classList.add('user-button');
         actionCell.appendChild(editPasswordButton);
 
         // Delete button - Logic not added yet
         const deleteUserButton = document.createElement('button');
         deleteUserButton.textContent = 'Delete User';
-        deleteUserButton.classList.add('Submit Button');
+        deleteUserButton.classList.add('user-button');
         actionCell.appendChild(deleteUserButton);
     });
 

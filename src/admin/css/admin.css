@@ -13,3 +13,11 @@
   background-color: steelblue;
   color: white;
 }
+
+.user-button {
+  background-color: var(--ammgreen);
+  margin-right: 10px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: black;
+}
