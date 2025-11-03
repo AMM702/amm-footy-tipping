@@ -35,6 +35,9 @@ function populateUserDropdownOptions(userData)
             });
         dropdownOptions.appendChild(a);
     });
+
+    // Default to QLD
+    adminDisplayUserDetails(userData['QLD']);
 };
 
 window.CustomLibrary = window.CustomLibrary || {};
