@@ -17,7 +17,7 @@ function adminDisplayUserDetails(userData)
     table.classList.add('custom-table');
 
     // Create header row
-    const tableHeaders = ['First Name', 'Surname', 'Email', 'Username'];
+    const tableHeaders = ['First Name', 'Surname', 'Email', 'Username', 'Actions'];
     const thead = table.createTHead();
     const headerRow = thead.insertRow();
 
@@ -40,6 +40,20 @@ function adminDisplayUserDetails(userData)
                 cell.classList.add('custom-cell')
             }
         });
+
+        // Create action cell
+        const actionCell = row.insertCell();
+        actionCell.classList.add('custom-cell');
+
+        // Edit Password button - Logic not added yet
+        const editPasswordButton = document.createElement('button');
+        editPasswordButton.textContent = 'Edit Password';
+        actionCell.appendChild(editPasswordButton);
+
+        // Delete button - Logic not added yet
+        const deleteUserButton = document.createElement('button');
+        deleteUserButton.textContent = 'Delete User';
+        actionCell.appendChild(deleteUserButton);
     });
 
     // Append table to div
