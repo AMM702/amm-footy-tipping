@@ -21,7 +21,6 @@ function populateUserDropdownOptions(userData)
 
         // Select data
         const stateData = userData[state];
-        console.log(stateData);
 
         // Add event listener
         a.addEventListener('click', function (event)
