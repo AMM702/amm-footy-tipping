@@ -22,6 +22,7 @@ function createGameFormElements(gameDetails) {
 	hiddenInput.name = `${gameID}`;
 	hiddenInput.value = 'none';
 	hiddenInput.id = `hidden_${gameID}`;
+	gridDiv.appendChild(hiddenInput);
 
     // Create the first radio button and label for Home Team 
 	const homeTeamDiv = document.createElement('div');
