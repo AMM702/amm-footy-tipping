@@ -11,7 +11,7 @@ function displayEditPasswordModal(btn)
         document.getElementById('hiddenValue').value = userID;
 
         var passwordField = document.getElementById('edit-password-field');
-        passwordField.textContent = '';
+        passwordField.value = '';
 
         passwordModal.style.display = 'block';
     };
