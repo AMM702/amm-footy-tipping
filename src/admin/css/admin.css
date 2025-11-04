@@ -71,10 +71,6 @@
   border-color: black;
 }
 
-.password-field:focus {
-  border-color: var(--ammgreen);
-}
-
 .close {
   color: #aaaaaa;
   float: right;
