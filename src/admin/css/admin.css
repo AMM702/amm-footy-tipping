@@ -25,6 +25,14 @@
   padding: 5px;
 }
 
+.user-button:hover {
+  background-color: var(--ammsubmitbuttonhovergreen);
+}
+
 .delete-button {
   background-color: darkorange;
+}
+
+.delete-button:hover {
+  background-color: orangered;
 }
