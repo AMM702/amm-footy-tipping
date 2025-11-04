@@ -2,7 +2,7 @@ function displayEditPasswordModal(btn)
 {
     var passwordModal = document.getElementById('edit-password-modal');
 
-    var span = document.getElementsByClassName("close")[0];
+    var span = document.getElementById('edit-password-close');
 
     btn.onclick = function()
     {
