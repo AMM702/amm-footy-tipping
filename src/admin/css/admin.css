@@ -63,6 +63,10 @@
   align-items: center;
 }
 
+.password-field {
+  padding-bottom: 10px;
+}
+
 .close {
   color: #aaaaaa;
   float: right;
