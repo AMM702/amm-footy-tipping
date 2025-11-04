@@ -33,7 +33,7 @@ function adminDisplayUserDetails(userData)
         const row = table.insertRow();
 
         Object.keys(user).forEach(key => {
-            if (key !== 'tippingID')
+            if (key !== 'userID')
             {
                 const cell = row.insertCell();
                 cell.textContent = user[key];
@@ -48,7 +48,9 @@ function adminDisplayUserDetails(userData)
         // Edit Password button - Logic not added yet
         const editPasswordButton = document.createElement('button');
         editPasswordButton.textContent = 'Edit Password';
+        editPasswordButton.setAttribute("data-value", `${user["userID"]}`);
         editPasswordButton.classList.add('user-button');
+        displayEditPasswordModal(editPasswordButton);
         actionCell.appendChild(editPasswordButton);
 
         // Delete button - Logic not added yet
@@ -56,7 +58,7 @@ function adminDisplayUserDetails(userData)
         deleteUserButton.textContent = 'Delete User';
         deleteUserButton.classList.add('user-button');
         deleteUserButton.classList.add('delete-button');
-        addDeleteButtonListener(deleteUserButton, user['tippingID'], user['userName']);
+        addDeleteButtonListener(deleteUserButton, user['userID'], user['userName']);
         actionCell.appendChild(deleteUserButton);
     });
 
