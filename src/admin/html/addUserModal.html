@@ -1,0 +1,21 @@
+<div id="new-user-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="new-user-close">&times;</span>
+
+        <form id="new-user-form">
+            <input type="text" name="firstname" placeholder="Enter First Name" class="password-field" required>
+            <input type="text" name="surname" placeholder="Enter Surname" class="password-field" required>
+            <input type="email" name="email" placeholder="Enter Email" class="password-field" required>
+            <select name="state" required>
+                <option value="" disabled selected>Select State</option>
+                <option value="QLD">QLD</option>
+                <option value="NSW">NSW</option>
+                <option value="VIC">VIC</option>
+                <option value="WA">WA</option>
+            </select>
+            <input type="text" name="username" placeholder="Enter Username" class="password-field" required>
+            <input type="password" name="state" placeholder="Enter password" class="password-field" id="edit-password-field" required>
+            <button type="submit" class="user-button">Create user</button>
+        </form>
+    </div>
+</div>
