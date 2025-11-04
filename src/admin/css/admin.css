@@ -10,7 +10,7 @@
 }
 
 .custom-table th {
-  background-color: steelblue;
+  background-color: var(--ammgreen);
   color: white;
 }
 
