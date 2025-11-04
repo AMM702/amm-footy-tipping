@@ -48,7 +48,9 @@ function adminDisplayUserDetails(userData)
         // Edit Password button - Logic not added yet
         const editPasswordButton = document.createElement('button');
         editPasswordButton.textContent = 'Edit Password';
+        editPasswordButton.setAttribute("data-value", `${user["tippingID"]}`);
         editPasswordButton.classList.add('user-button');
+        displayEditPasswordModal(editPasswordButton);
         actionCell.appendChild(editPasswordButton);
 
         // Delete button - Logic not added yet
