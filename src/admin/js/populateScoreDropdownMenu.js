@@ -111,4 +111,7 @@ function createSelectFormMenu(matchData)
     };
 
     return select;
-}
+};
+
+window.CustomLibrary = window.CustomLibrary || {};
+window.CustomLibrary.populateScoreDropdownMenu = populateScoreDropdownMenu;
