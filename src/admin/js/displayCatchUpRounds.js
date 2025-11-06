@@ -81,4 +81,7 @@ function createSelectMenu(roundData)
     }
 
     return select;
-}
+};
+
+window.CustomLibrary = window.CustomLibrary || {};
+window.CustomLibrary.displayCatchUpRounds = displayCatchUpRounds;
