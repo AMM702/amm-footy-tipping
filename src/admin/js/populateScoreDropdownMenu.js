@@ -28,6 +28,16 @@ function populateScoreDropdownMenu(gameData, scoreForm, scoreLabel, scoreOptions
             });
         roundOptions.appendChild(a);
     });
+
+    // Default to the first round
+    const firstRoundData = gameData.rounds[0];
+    roundLabel.textContent = `Round ${firstRoundData.round}`;
+
+    // Clear existing form elements
+    formElement.innerHTML = '';
+
+    // Display round data
+    formElement.appendChild(displayScoreData(firstRoundData));
 };
 
 function displayScoreData(roundData)
@@ -37,7 +47,7 @@ function displayScoreData(roundData)
     table.classList.add('custom-table');
 
     // Create header row 
-    const tableHeaders = ['Date','Game','Result'];
+    const tableHeaders = ['Date','Game','Winner'];
     const thead = table.createTHead();
     const headerRow = thead.insertRow();
 
