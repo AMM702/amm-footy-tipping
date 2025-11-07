@@ -38,4 +38,7 @@ function populateLeaderboardDropdownOptions(leaderboardData)
 
     // Default to QLD
     // Call function here
-}
+};
+
+window.CustomLibrary = window.CustomLibrary || {};
+window.CustomLibrary.populateLeaderboardDropdownOptions = populateLeaderboardDropdownOptions;
