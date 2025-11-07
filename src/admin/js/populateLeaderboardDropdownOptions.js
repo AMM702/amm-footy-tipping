@@ -40,5 +40,37 @@ function populateLeaderboardDropdownOptions(leaderboardData)
     // Call function here
 };
 
+function createLeaderboardTable(stateData)
+{
+    const leaderboardDiv = document.getElementById('leaderboard-table-div');
+
+    // Create table
+    const table = document.createElement('table');
+    table.classList.add('custom-table');
+
+    // Create header row 
+    const thead = table.createTHead();
+    const headerRow = thead.insertRow();
+
+    const tipperHeader = document.createElement('th');
+    tipperHeader.textContent = 'Tipper';
+    tipperHeader.classList.add('custom-cell');
+    tipperHeader.appendChild(headerElement);
+
+    for (let i = 0; i < stateData.totalRounds; i++)
+    {
+        const headerElement = document.createElement('th');
+        headerElement.textContent = `${i++}`;
+        headerElement.classList.add('custom-cell');
+        headerRow.appendChild(headerElement);
+    };
+
+    const totalScoreHeader = document.createElement('th');
+    totalScoreHeader.textContent = 'Total Score';
+    totalScoreHeader.classList.add('custom-cell');
+    headerRow.appendChild(totalScoreHeader);
+
+};
+
 window.CustomLibrary = window.CustomLibrary || {};
 window.CustomLibrary.populateLeaderboardDropdownOptions = populateLeaderboardDropdownOptions;
