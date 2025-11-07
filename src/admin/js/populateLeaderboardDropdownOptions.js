@@ -68,7 +68,7 @@ function createLeaderboardTable(stateData)
     for (let i = 0; i < stateData.totalRounds; i++)
     {
         const headerElement = document.createElement('th');
-        headerElement.textContent = `${i++}`;
+        headerElement.textContent = `${i+ 1}`;
         headerElement.classList.add('custom-cell');
         headerRow.appendChild(headerElement);
     };
