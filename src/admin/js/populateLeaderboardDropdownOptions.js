@@ -43,6 +43,7 @@ function populateLeaderboardDropdownOptions(leaderboardData)
 function createLeaderboardTable(stateData)
 {
     const leaderboardDiv = document.getElementById('leaderboard-table-div');
+    leaderboardDiv.innerHTML = '';
 
     if (stateData.users.length === 0)
     {
@@ -88,18 +89,14 @@ function createLeaderboardTable(stateData)
         userCell.classList.add('custom-cell');
 
         // Round scores
-        user.scores.forEach(score => {
+        Object.keys(user.scores).forEach(round => {
             const roundCell = row.insertCell();
-            if (score === 0)
-            {
-                roundCell.textContent = '-';
-            }
-            else 
-            {
-                roundCell.textContent = score;
-            }
+            const score = user.scores[round] === 0
+                ? '-'
+                : user.scores[round];
+            roundCell.textContent = score;
             roundCell.classList.add('custom-cell');
-        });
+        })
 
         // Total Score
         const totalCell = row.insertCell();
