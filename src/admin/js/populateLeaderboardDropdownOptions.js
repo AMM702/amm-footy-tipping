@@ -70,6 +70,36 @@ function createLeaderboardTable(stateData)
     totalScoreHeader.classList.add('custom-cell');
     headerRow.appendChild(totalScoreHeader);
 
+    // Display user data
+    stateData.users.forEach(user => {
+        const row = table.insertRow();
+
+        // Username cell
+        const userCell = row.insertCell();
+        userCell.textContent = user.userName;
+        userCell.classList.add('custom-cell');
+
+        // Round scores
+        user.scores.forEach(score => {
+            const roundCell = row.insertCell();
+            if (score === 0)
+            {
+                roundCell.textContent = '-';
+            }
+            else 
+            {
+                roundCell.textContent = score;
+            }
+            roundCell.classList.add('custom-cell');
+        });
+
+        // Total Score
+        const totalCell = row.insertCell();
+        totalCell.textContent = user.total;
+        totalCell.classList.add('custom-cell');
+    });
+
+    leaderboardDiv.appendChild(table);
 };
 
 window.CustomLibrary = window.CustomLibrary || {};
