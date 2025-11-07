@@ -31,13 +31,13 @@ function populateLeaderboardDropdownOptions(leaderboardData)
                 dropdownLabel.textContent = state;
 
                 // Change displayed table
-                // Call function here
+                createLeaderboardTable(stateData);
             });
         dropdownOptions.appendChild(a);
     });
 
     // Default to QLD
-    // Call function here
+    createLeaderboardTable(leaderboardData['QLD']);
 };
 
 function createLeaderboardTable(stateData)
