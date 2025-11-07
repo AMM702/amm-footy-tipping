@@ -63,7 +63,7 @@ function createLeaderboardTable(stateData)
     const tipperHeader = document.createElement('th');
     tipperHeader.textContent = 'Tipper';
     tipperHeader.classList.add('custom-cell');
-    tipperHeader.appendChild(headerElement);
+    headerRow.appendChild(tipperHeader);
 
     for (let i = 0; i < stateData.totalRounds; i++)
     {
