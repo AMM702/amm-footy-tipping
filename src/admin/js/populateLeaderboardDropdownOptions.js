@@ -44,6 +44,14 @@ function createLeaderboardTable(stateData)
 {
     const leaderboardDiv = document.getElementById('leaderboard-table-div');
 
+    if (stateData.users.length === 0)
+    {
+        const label = document.createElement('p');
+        label.textContent = 'No data available';
+        leaderboardDiv.appendChild(label);
+        return;
+    }
+
     // Create table
     const table = document.createElement('table');
     table.classList.add('custom-table');
