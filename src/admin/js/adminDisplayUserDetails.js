@@ -53,6 +53,14 @@ function adminDisplayUserDetails(userData)
         displayEditPasswordModal(editPasswordButton);
         actionCell.appendChild(editPasswordButton);
 
+        // Login as User button - Logic not added yet
+        const loginAsUserButton = document.createElement('button');
+        loginAsUserButton.textContent = 'Edit Password';
+        loginAsUserButton.setAttribute("data-value", `${user["userID"]}`);
+        loginAsUserButton.classList.add('user-button');
+        addLoginAsUserButtonListener(loginAsUserButton);
+        actionCell.appendChild(loginAsUserButton);
+
         // Delete button - Logic not added yet
         const deleteUserButton = document.createElement('button');
         deleteUserButton.textContent = 'Delete User';
@@ -65,6 +73,13 @@ function adminDisplayUserDetails(userData)
     // Append table to div
     usersDiv.appendChild(table);
 };
+
+function addLoginAsUserButtonListener(btn)
+{
+    btn.addEventListener("click", function() {
+        alert('Logging in as user')
+    });
+}
 
 function deleteUser(userID, userName)
 {
