@@ -55,7 +55,7 @@ function adminDisplayUserDetails(userData)
 
         // Login as User button - Logic not added yet
         const loginAsUserButton = document.createElement('button');
-        loginAsUserButton.textContent = 'Edit Password';
+        loginAsUserButton.textContent = 'Login as User';
         loginAsUserButton.setAttribute("data-value", `${user["userID"]}`);
         loginAsUserButton.classList.add('user-button');
         addLoginAsUserButtonListener(loginAsUserButton);
