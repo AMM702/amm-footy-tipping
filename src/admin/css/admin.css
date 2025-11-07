@@ -9,6 +9,12 @@
   min-width: clamp(100px, 12vw, 160px);
 }
 
+.custom-table .score-cell {
+  padding: 8px;
+  text-align: center;
+  min-width: 10px;
+}
+
 .custom-table th {
   background-color: var(--ammgreen);
   color: white;

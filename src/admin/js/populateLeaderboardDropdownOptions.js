@@ -63,20 +63,20 @@ function createLeaderboardTable(stateData)
 
     const tipperHeader = document.createElement('th');
     tipperHeader.textContent = 'Tipper';
-    tipperHeader.classList.add('custom-cell');
+    tipperHeader.classList.add('score-cell');
     headerRow.appendChild(tipperHeader);
 
     for (let i = 0; i < stateData.totalRounds; i++)
     {
         const headerElement = document.createElement('th');
         headerElement.textContent = `${i+ 1}`;
-        headerElement.classList.add('custom-cell');
+        headerElement.classList.add('score-cell');
         headerRow.appendChild(headerElement);
     };
 
     const totalScoreHeader = document.createElement('th');
     totalScoreHeader.textContent = 'Total Score';
-    totalScoreHeader.classList.add('custom-cell');
+    totalScoreHeader.classList.add('score-cell');
     headerRow.appendChild(totalScoreHeader);
 
     // Display user data
@@ -86,7 +86,7 @@ function createLeaderboardTable(stateData)
         // Username cell
         const userCell = row.insertCell();
         userCell.textContent = user.userName;
-        userCell.classList.add('custom-cell');
+        userCell.classList.add('score-cell');
 
         // Round scores
         Object.keys(user.scores).forEach(round => {
@@ -95,13 +95,13 @@ function createLeaderboardTable(stateData)
                 ? '-'
                 : user.scores[round];
             roundCell.textContent = score;
-            roundCell.classList.add('custom-cell');
+            roundCell.classList.add('score-cell');
         })
 
         // Total Score
         const totalCell = row.insertCell();
         totalCell.textContent = user.total;
-        totalCell.classList.add('custom-cell');
+        totalCell.classList.add('score-cell');
     });
 
     leaderboardDiv.appendChild(table);
