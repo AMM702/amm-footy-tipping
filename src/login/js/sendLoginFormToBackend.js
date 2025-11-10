@@ -11,4 +11,7 @@ function sendLoginFormToBackend()
         // Send data to the backend
         console.table(data) // Output form data to console
     })
-}
+};
+
+window.CustomLibrary = window.CustomLibrary || {};
+window.CustomLibrary.sendLoginFormToBackend = sendLoginFormToBackend;
