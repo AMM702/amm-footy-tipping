@@ -3,6 +3,11 @@
   border-collapse: collapse;
 }
 
+.custom-table th,
+.custom-table td {
+  border-bottom: 1px solid black;
+}
+
 .custom-table .custom-cell {
   padding: 8px;
   text-align: left;
