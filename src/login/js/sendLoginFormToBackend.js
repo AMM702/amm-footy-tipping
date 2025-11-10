@@ -1,6 +1,6 @@
 function sendLoginFormToBackend()
 {
-    const form = document.getElementById('user-login-form');
+    const form = document.getElementById('wf-form-Password');
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
