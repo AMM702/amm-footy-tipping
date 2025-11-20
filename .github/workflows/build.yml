@@ -1,0 +1,54 @@
+name: Build and Commit JS Bundles
+
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # allows committing back to the repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # required so we can commit changes
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Setup npm & install esbuild
+        run: |
+          npm init -y
+          npm install esbuild
+
+      - name: Build JS bundles
+        run: |
+          mkdir -p dist
+          for PAGE in $(ls src); do
+            ENTRY="src/$PAGE/js/index.js"
+            if [ -f "$ENTRY" ]; then
+              echo "Bundling $PAGE..."
+              npx esbuild "$ENTRY" --bundle --minify --outfile=dist/$PAGE.js
+            else
+              echo "Skipping $PAGE (no index.js)"
+            fi
+          done
+
+      - name: Commit dist/ folder
+        run: |
+          if [ -n "$(git status --porcelain dist)" ]; then
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git config user.name "github-actions[bot]"
+            git add dist
+            git commit -m "Update dist bundles" || true
+            git push
+          else
+            echo "No changes in dist/, skipping commit"
+          fi

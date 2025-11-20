@@ -1,4 +1,4 @@
-function sendTippingEmail()
+export function sendTippingEmail()
 {
     const form = document.getElementById('email-users-form-main')
     

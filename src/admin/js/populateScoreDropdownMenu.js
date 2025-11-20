@@ -1,4 +1,4 @@
-function populateScoreDropdownMenu(gameData, scoreForm, scoreLabel, scoreOptions)
+export function populateScoreDropdownMenu(gameData, scoreForm, scoreLabel, scoreOptions)
 {
     // Select existing DOM elements
     const formElement = document.getElementById(scoreForm);

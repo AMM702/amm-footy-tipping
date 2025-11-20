@@ -1,4 +1,4 @@
-function displayEditPasswordModal(btn)
+export function displayEditPasswordModal(btn)
 {
     var passwordModal = document.getElementById('edit-password-modal');
 

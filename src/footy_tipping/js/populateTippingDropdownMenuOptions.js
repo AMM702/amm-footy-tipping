@@ -1,4 +1,4 @@
-function populateTippingDropdownMenuOptions(gameData)
+export function populateTippingDropdownMenuOptions(gameData)
 {
     // Select elements to modify
     const dropdownOptions = document.getElementById('tippingRoundListOptions');

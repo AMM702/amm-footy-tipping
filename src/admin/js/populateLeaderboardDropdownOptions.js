@@ -1,4 +1,4 @@
-function populateLeaderboardDropdownOptions(leaderboardData)
+export function populateLeaderboardDropdownOptions(leaderboardData)
 {
     // Select dropdown menu elements
     const dropdownOptions = document.getElementById('leaderboard-dropdown-options');
