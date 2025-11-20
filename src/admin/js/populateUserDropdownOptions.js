@@ -1,3 +1,4 @@
+import { adminDisplayUserDetails } from "./adminDisplayUserDetails";
 export function populateUserDropdownOptions(userData) 
 {
     // Select dropdown menu elements
