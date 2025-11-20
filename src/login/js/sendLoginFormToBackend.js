@@ -1,4 +1,4 @@
-function sendLoginFormToBackend()
+export function sendLoginFormToBackend()
 {
     const form = document.getElementById('wf-form-Password');
 
