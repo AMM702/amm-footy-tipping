@@ -1,4 +1,5 @@
-function populateUserDropdownOptions(userData) 
+import { adminDisplayUserDetails } from "./adminDisplayUserDetails";
+export function populateUserDropdownOptions(userData) 
 {
     // Select dropdown menu elements
     const dropdownOptions = document.getElementById('users-dropdown-options');

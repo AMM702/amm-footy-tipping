@@ -1,4 +1,4 @@
-function displayAddUserModal()
+export function displayAddUserModal()
 {
     var userModal = document.getElementById('new-user-modal');
 
