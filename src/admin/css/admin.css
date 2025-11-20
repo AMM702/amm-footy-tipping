@@ -108,7 +108,7 @@
 
 .game-dropdown-menu {
   padding-left: 20px;
-  padding-right: 40px;
+  padding-right: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
   border: black;
@@ -119,13 +119,6 @@
 
 .game-dropdown-menu:hover {
   cursor: pointer;
-}
-
-.game-dropdown-list {
-  border: black;
-  border-style: solid;
-  border-radius: 1px;
-  border-width: 10px;
 }
 
 .game-dropdown-option {
