@@ -47,7 +47,7 @@ jobs:
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git config user.name "github-actions[bot]"
             git add dist
-            git commit -m "Update dist bundles [skip ci]" || true
+            git commit -m "Update dist bundles" || true
             git push
           else
             echo "No changes in dist/, skipping commit"
