@@ -96,3 +96,10 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+/* Upload game data styles */
+.form-row {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
