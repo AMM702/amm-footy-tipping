@@ -1,4 +1,4 @@
-function adminDisplayUserDetails(userData)
+export function adminDisplayUserDetails(userData)
 {
     // Select table div and clear existing elements
     const usersDiv = document.getElementById('users-display-div');

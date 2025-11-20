@@ -1,4 +1,4 @@
-function populateUserDropdownOptions(userData) 
+export function populateUserDropdownOptions(userData) 
 {
     // Select dropdown menu elements
     const dropdownOptions = document.getElementById('users-dropdown-options');

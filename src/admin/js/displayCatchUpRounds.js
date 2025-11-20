@@ -1,4 +1,4 @@
-function displayCatchUpRounds(catchUpGameData, gameForm)
+export function displayCatchUpRounds(catchUpGameData, gameForm)
 {
     gameForm = document.getElementById(gameForm);
 
