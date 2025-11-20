@@ -105,3 +105,14 @@
   align-items: start;
   justify-items: center;
 }
+
+.game-dropdown-menu {
+  padding-left: 20px;
+  padding-right: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: black;
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+}
