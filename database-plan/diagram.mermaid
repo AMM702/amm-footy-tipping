@@ -1,0 +1,72 @@
+erDiagram
+    USERS ||--o{ TIPS : "submits"
+    USERS ||--o{ SCORES : "earns"
+    GAMES ||--o{ TIPS : "receives"
+    ROUNDS ||--o{ GAMES : "contains"
+    ROUNDS ||--o{ SCORES : "has"
+    ROUNDS ||--o| GAMES : "catch_up_game"
+    TEAMS ||--o{ GAMES : "home_team"
+    TEAMS ||--o{ GAMES : "away_team"
+
+    USERS {
+        uuid user_id PK
+        varchar first_name
+        varchar surname
+        varchar email UK
+        varchar username UK
+        varchar password_hash
+        varchar state "QLD|NSW|VIC|WA"
+        boolean is_admin
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    TEAMS {
+        serial team_id PK
+        varchar team_name UK
+        varchar team_abbreviation
+        timestamp created_at
+    }
+
+    ROUNDS {
+        serial round_id PK
+        integer round_number UK
+        varchar round_name
+        boolean is_round_on
+        integer catch_up_game_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    GAMES {
+        serial game_id PK
+        integer round_id FK
+        integer game_number
+        integer home_team_id FK
+        integer away_team_id FK
+        date game_date
+        varchar game_time
+        varchar ground
+        integer result "1=home|2=away|NULL"
+        boolean is_tippable
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    TIPS {
+        serial tip_id PK
+        uuid user_id FK
+        integer game_id FK
+        integer tip "1=home|2=away"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    SCORES {
+        serial score_id PK
+        uuid user_id FK
+        integer round_id FK
+        integer score
+        timestamp created_at
+        timestamp updated_at
+    }
