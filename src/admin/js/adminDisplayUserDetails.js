@@ -1,3 +1,4 @@
+import { displayEditPasswordModal } from "./displayEditPasswordModal";
 export function adminDisplayUserDetails(userData)
 {
     // Select table div and clear existing elements
