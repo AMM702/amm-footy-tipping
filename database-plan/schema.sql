@@ -35,12 +35,27 @@ CREATE TABLE teams (
 CREATE UNIQUE INDEX idx_teams_name ON teams(team_name);
 
 -- =====================================================
+-- 2b. SEASONS TABLE
+-- =====================================================
+CREATE TABLE seasons (
+  season_id SERIAL PRIMARY KEY,
+  season_name VARCHAR(100) NOT NULL UNIQUE,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE UNIQUE INDEX idx_seasons_name ON seasons(season_name);
+
+-- =====================================================
 -- 3. ROUNDS TABLE
 -- =====================================================
 CREATE TABLE rounds (
   round_id SERIAL PRIMARY KEY,
   round_number INTEGER NOT NULL UNIQUE,
-  round_name VARCHAR(100) NOT NULL,
+round_name VARCHAR(100) NOT NULL,
+  season_id INTEGER REFERENCES seasons(season_id),
   is_round_on BOOLEAN DEFAULT FALSE,
   catch_up_game_id INTEGER,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),

@@ -2,6 +2,7 @@ erDiagram
     USERS ||--o{ TIPS : "submits"
     USERS ||--o{ SCORES : "earns"
     GAMES ||--o{ TIPS : "receives"
+    SEASONS ||--o{ ROUNDS : "includes"
     ROUNDS ||--o{ GAMES : "contains"
     ROUNDS ||--o{ SCORES : "has"
     ROUNDS ||--o| GAMES : "catch_up_game"
@@ -28,10 +29,20 @@ erDiagram
         timestamp created_at
     }
 
+    SEASONS {
+        serial season_id PK
+        varchar season_name UK
+        date start_date
+        date end_date
+        boolean is_active
+        timestamp created_at
+    }
+
     ROUNDS {
         serial round_id PK
         integer round_number UK
         varchar round_name
+        integer season_id FK
         boolean is_round_on
         integer catch_up_game_id FK
         timestamp created_at
