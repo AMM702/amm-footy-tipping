@@ -3,7 +3,6 @@ export function populateTippingDropdownMenuOptions(gameData)
     // Select elements to modify
     const dropdownOptions = document.getElementById('tippingRoundListOptions');
     const dropdownLabel = document.getElementById('tippingRoundDisplayText');
-    const dropdownMenu = document.getElementById('tippingRoundList');
     const tippingForm = document.getElementById('tipping-form');
     const leagueLabel = document.getElementById('league-table-heading');
    
@@ -13,35 +12,33 @@ export function populateTippingDropdownMenuOptions(gameData)
     // Clear existing items
     dropdownOptions.innerHTML = '';
 
+    // Extract JSON data
+    const jsonData = gameData[data]
+
     // Add options to menu
-    for (const key in gameData)
-    {
-        if (gameData.hasOwnProperty(key)) 
-        {
-            const round = gameData[key];
-            
-            // Create drop down menu option
-            const a = document.createElement('a');
-            a.href = '#';
-            a.className = 'w-dropdown-link username_display';
-            a.textContent = round.name;
-            a.id = `${slug(round.name)}`;
+    jsonData.forEach(roundData => {
+        const roundName = `Round ${roundData.round}`
 
-            // Add event listener
-            a.addEventListener('click', function (event)
-                {
-                    event.preventDefault();
+        // Create drop down menu option
+        const a = document.createElement('a');
+        a.href = '#';
+        a.className = 'w-dropdown-link username_display';
+        a.textContent = roundName;
+        a.id = `${slug(roundName)}`;
 
-                    // Add games to form
-                    populateGameData(round, tippingForm, dropdownLabel, leagueLabel);
+        // Add event listener
+        a.addEventListener('click', function (event)
+            {
+                event.preventDefault();
 
-                    // Display round scores
-                    displayLeagueTable(round);
-                }
-            );
-            dropdownOptions.appendChild(a);
-        }
-    };
+                // Add games to form
+                populateGameData(roundData, tippingForm, dropdownLabel, leagueLabel, roundName)
+
+                // Display round scores
+                displayLeagueTable(roundData);
+            });
+        dropdownOptions.appendChild(a);
+    });
 
     // Auto select a round
     let hasSwitch = false;
@@ -71,13 +68,13 @@ export function populateTippingDropdownMenuOptions(gameData)
     }
 };
 
-function populateGameData(roundData, formID, labelID, leagueLabelID)
+function populateGameData(roundData, formID, labelID, leagueLabelID, roundName)
 {
     // Update dropdown menu label
-    labelID.textContent = roundData.name;
+    labelID.textContent = roundName;
 
     // Update league label text
-    leagueLabelID.textContent = `League Table (${roundData.name})`;
+    leagueLabelID.textContent = `League Table (${roundName})`;
 
     // Remove existing games
     const tippingFormChildren = Array.from(formID.children);
