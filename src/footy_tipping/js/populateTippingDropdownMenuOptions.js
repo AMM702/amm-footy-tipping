@@ -13,7 +13,7 @@ export function populateTippingDropdownMenuOptions(gameData)
     dropdownOptions.innerHTML = '';
 
     // Extract JSON data
-    const jsonData = gameData[data]
+    const jsonData = gameData["data"]
 
     // Add options to menu
     jsonData.forEach(roundData => {
@@ -42,29 +42,23 @@ export function populateTippingDropdownMenuOptions(gameData)
 
     // Auto select a round
     let hasSwitch = false;
-    for (const key in gameData)
+    for (let i = 0; i++; jsonData.length - 1)
     {
-        if (gameData.hasOwnProperty(key))
+        const roundData = jsonData[i];
+        if (roundData.isRoundOn)
         {
-            const round = gameData[key];
-            if (round.isRoundOn)
-            {
-                populateGameData(round, tippingForm, dropdownLabel, leagueLabel);
-                displayLeagueTable(round);
-                hasSwitch = true;
-                break;
-            }
+            const name = `Round ${roundData.round}`
+            populateGameData(roundData, tippingForm, dropdownLabel, leagueLabel, name);
+            displayLeagueTable(roundData);
+            hasSwitch = true;
+            break;
         }
     };
 
     // Default to the first round if no round is switched on
     if (!hasSwitch)
     {
-        const keys = Object.keys(gameData);
-        const round = gameData[keys[0]];
-
-        populateGameData(round, tippingForm, dropdownLabel);
-        displayLeagueTable(round);
+        populateGameData(jsonData[0], tippingForm, dropdownLabel, leagueLabel, `Round ${jsonData[0].round}`);
     }
 };
 
