@@ -1,7 +1,7 @@
 name: Build and Commit JS Bundles
 
 on:
-  workflow_dispatch:
+  push:
   pull_request:
     branches: [ main ]
 
