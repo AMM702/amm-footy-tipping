@@ -42,7 +42,7 @@ export function populateTippingDropdownMenuOptions(gameData)
 
     // Auto select a round
     let hasSwitch = false;
-    for (let i = 0; i++; jsonData.length - 1)
+    for (let i = 0; i < jsonData.length; i++)
     {
         const roundData = jsonData[i];
         if (roundData.isRoundOn)
@@ -59,6 +59,7 @@ export function populateTippingDropdownMenuOptions(gameData)
     if (!hasSwitch)
     {
         populateGameData(jsonData[0], tippingForm, dropdownLabel, leagueLabel, `Round ${jsonData[0].round}`);
+        displayLeagueTable(jsonData[0])
     }
 };
 
