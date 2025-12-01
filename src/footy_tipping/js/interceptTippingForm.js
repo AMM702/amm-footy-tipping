@@ -1,6 +1,6 @@
 export function interceptTippingForm()
 {
-    const tippingFormID = document.getElementById('tipping-form-block');
+    const tippingFormID = document.getElementById('tipping-form');
 
     tippingFormID.addEventListener('submit', (e) => {
         e.preventDefault();
