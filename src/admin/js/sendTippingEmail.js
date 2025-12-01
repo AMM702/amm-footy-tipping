@@ -1,6 +1,6 @@
 export function sendTippingEmail()
 {
-    const form = document.getElementById('email-users-form-main')
+    const form = document.getElementById('email-users-form')
     
     // Default to ALL recipients
     const defaultRadioButton = document.querySelector('input[name="Recipient"][value="All"]');
@@ -10,7 +10,7 @@ export function sendTippingEmail()
         e.preventDefault();
 
         // Get email list
-        const recipient = form.querySelector("input[name='Recipient']:checked")?.ariaValueMax;
+        const recipient = form.querySelector("input[name='Recipient']:checked")?.value;
         if (!recipient)
         {
             alert("Select a recipient");
