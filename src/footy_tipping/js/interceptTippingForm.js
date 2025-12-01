@@ -6,9 +6,9 @@ export function interceptTippingForm()
         e.preventDefault();
 
         const formData = new FormData(tippingFormID);
+        formData.delete("cf-turnstile-response");
         const data = Object.fromEntries(formData.entries());
 
-        console.log("Test");
         console.table(data);
     });
 };
