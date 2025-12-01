@@ -5,7 +5,7 @@ export function interceptTippingForm()
     tippingFormID.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const formData = new formData(tippingFormID);
+        const formData = new FormData(tippingFormID);
         const data = Object.fromEntries(formData.entries());
 
         console.table(data);
