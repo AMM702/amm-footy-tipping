@@ -1,6 +1,6 @@
 export function sendTippingEmail()
 {
-    const form = document.getElementById('email-users-form-main')
+    const form = document.getElementById('email-users-form')
     
     // Default to ALL recipients
     const defaultRadioButton = document.querySelector('input[name="Recipient"][value="All"]');
