@@ -6,7 +6,7 @@ export function interceptUploadGameDataForm()
         e.preventDefault();
 
         const formData = new FormData(uploadForm);
-        const data = Object.fromEntries(formData.entries);
+        const data = Object.fromEntries(formData.entries());
 
         console.log(data);
     })
