@@ -8,6 +8,7 @@ export function interceptTippingForm()
         const formData = new FormData(tippingFormID);
         const data = Object.fromEntries(formData.entries());
 
+        console.log("Test");
         console.table(data);
     });
 };
