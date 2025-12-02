@@ -9,7 +9,7 @@ export function interceptRegisterForm()
         formData.delete("cf-turnstile-response");
         const data = Object.fromEntries(formData.entries());
 
-        if (data.aflComp == "None" && data.nrlComp == "None")
+        if (data.aflComp == "none" && data.nrlComp == "none")
         {
             alert("You must select a competition.");
             throw new Error("No competition was selected.");
