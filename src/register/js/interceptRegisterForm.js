@@ -6,7 +6,7 @@ export function interceptRegisterForm()
         e.preventDefault();
 
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData.fromEntries());
+        const data = Object.fromEntries(formData.entries());
 
         console.log(data);
     });
