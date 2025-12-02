@@ -4,5 +4,5 @@ import { setDefaultStates } from "./setDefaultStates";
 // Run form intercept functions
 interceptRegisterForm();
 
-// Run other functions
+// Run other startup functions
 setDefaultStates();
