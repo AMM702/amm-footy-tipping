@@ -1,1 +1,1 @@
-(()=>{function t(){let e=document.getElementById("wf-form-register-user");e.addEventListener("submit",r=>{r.preventDefault();let o=new FormData(e),n=Object.fromEntries(o.entries());console.log(n)})}t();})();
+(()=>{function r(){let t=document.getElementById("wf-form-register-user");t.addEventListener("submit",n=>{n.preventDefault();let o=new FormData(t);o.delete("cf-turnstile-response");let e=Object.fromEntries(o.entries());if(e.aflComp=="None"&&e.nrlComp=="None")throw alert("You must select a competition."),new Error("No competition was selected.");console.log(e)})}r();})();
