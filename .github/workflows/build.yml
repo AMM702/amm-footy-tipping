@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 2
 
     permissions:
       contents: write   # allows committing back to the repo
