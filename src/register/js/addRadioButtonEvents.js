@@ -1,4 +1,4 @@
-export function setDefaultStates()
+export function addRadioButtonEvents()
 {
     // Select NRL Radio Buttons
     const nrlButtons = [document.getElementById('QLD-register'), document.getElementById('NSW-register')];
@@ -9,11 +9,11 @@ export function setDefaultStates()
     aflDiv = document.getElementById('afl-comp-div');
     
     // Add hidden input
-    addRadioButtonListeners(nrlButtons, 'nrlComp', nrlDiv);
-    addRadioButtonListeners(aflButtons, 'aflComp', aflDiv);
+    addRadioButtonListener(nrlButtons, 'nrlComp', nrlDiv);
+    addRadioButtonListener(aflButtons, 'aflComp', aflDiv);
 }
 
-function addRadioButtonListeners(buttonsArray, groupName, div)
+function addRadioButtonListener(buttonsArray, groupName, div)
 {
     // Create hidden input
     const hiddenInput = document.createElement('input');
