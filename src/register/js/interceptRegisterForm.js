@@ -16,5 +16,8 @@ export function interceptRegisterForm()
         }
 
         console.log(data);
+
+        // Navigate to login page
+        window.location.href = '/';
     });
 }
