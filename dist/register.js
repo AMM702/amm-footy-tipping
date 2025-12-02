@@ -1,1 +1,1 @@
-(()=>{function t(){let e=document.getElementById("wf-form-register-user");e.addEventListener("submit",r=>{r.preventDefault();let o=new FormData(e),n=Object.fromEntries(o.fromEntries());console.log(n)})}t();})();
+(()=>{function t(){let e=document.getElementById("wf-form-register-user");e.addEventListener("submit",r=>{r.preventDefault();let o=new FormData(e),n=Object.fromEntries(o.entries());console.log(n)})}t();})();
