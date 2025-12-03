@@ -3,6 +3,7 @@ export function createGameTypeButtons(gameData)
     // Select button div
     const buttonDiv = document.getElementById('state-buttons');
     const compSelectionDiv = document.getElementById('comp-select-div')
+    const gameName = document.getElementById('tippingGameName');
     buttonDiv.innerHTML = '';
 
     // Select game data from sessionStorage
@@ -22,6 +23,21 @@ export function createGameTypeButtons(gameData)
 
     // Default to first data type
     window.CustomLibrary.populateTippingDropdownMenuOptions(gameData[dataKeys[0]]);
+    switch (dataKeys[0])
+    {
+        case 'qld':
+        case 'nsw':
+            const nrlState = dataKeys[0].toUpperCase();
+            gameName.textContent = `NRL - ${nrlState} Comp`;
+            break;
+        case 'vic':
+        case 'wa':
+            const aflState = dataKeys[0].toUpperCase();
+            gameName.textContent = `NRL - ${aflState} Comp`;
+            break;
+        default:
+            break;
+    }
 }
 
 function createStateButtons(data, state, div)
