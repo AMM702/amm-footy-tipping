@@ -7,6 +7,8 @@ export function createGameTypeButtons(gameData)
     // Select game data from sessionStorage
     // Extract keys from data
     const dataKeys = Object.keys(gameData);
+    console.log(gameData);
+    console.log(dataKeys);
 
     dataKeys.forEach(key => {
         const state = key.toUpperCase();
