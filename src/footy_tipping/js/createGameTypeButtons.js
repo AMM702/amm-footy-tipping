@@ -1,20 +1,14 @@
 import { populateTippingDropdownMenuOptions } from "./populateTippingDropdownMenuOptions";
 
-export function createGameTypeButtons()
+export function createGameTypeButtons(gameData)
 {
     // Select button div
     const buttonDiv = document.getElementById('comp-select-div');
     buttonDiv.innerHTML = '';
 
     // Select game data from sessionStorage
-    const rawTippingData = sessionStorage.getItem("tippingData");
-
-    if (!rawTippingData) return;
-
-    const data = JSON.parse(rawTippingData);
-
     // Extract keys from data
-    const dataKeys = Object.keys(data);
+    const dataKeys = Object.keys(gameData);
 
     dataKeys.forEach(key => {
         const state = key.toUpperCase();
@@ -58,3 +52,6 @@ function createStateButtons(data, state)
         populateTippingDropdownMenuOptions(data);
     })
 }
+
+window.CustomLibrary = window.CustomLibrary || {};
+window.CustomLibrary.createGameTypeButtons = createGameTypeButtons;
