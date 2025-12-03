@@ -9,8 +9,6 @@ export function createGameTypeButtons(gameData)
     // Select game data from sessionStorage
     // Extract keys from data
     const dataKeys = Object.keys(gameData);
-    console.log(gameData);
-    console.log(dataKeys);
 
     if (dataKeys.length > 1) // Only create the buttons if there is more than 1 comp
     {
