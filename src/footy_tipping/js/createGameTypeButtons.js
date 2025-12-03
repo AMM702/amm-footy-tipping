@@ -38,19 +38,15 @@ function createStateButtons(data, state, div)
     {
         case 'QLD':
             button.classList.add('qld-button');
-            gameName.textContent = 'NRL - QLD Comp';
             break;
         case 'NSW':
             button.classList.add('nsw-button');
-            gameName.textContent = 'NRL - NSW Comp';
             break;
         case 'VIC':
             button.classList.add('vic-button');
-            gameName.textContent = 'AFL - VIC Comp';
             break;
         case 'WA':
             button.classList.add('wa-button');
-            gameName.textContent = 'AFL - WA Comp';
             break;
         default:
             button.classList.add('unknown-state');
