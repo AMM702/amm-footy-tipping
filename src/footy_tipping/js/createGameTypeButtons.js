@@ -1,5 +1,3 @@
-import { populateTippingDropdownMenuOptions } from "./populateTippingDropdownMenuOptions";
-
 export function createGameTypeButtons(gameData)
 {
     // Select button div
@@ -16,7 +14,7 @@ export function createGameTypeButtons(gameData)
     });
 
     // Default to first data type
-    populateTippingDropdownMenuOptions(data[0]);
+    window.CustomLibrary.populateTippingDropdownMenuOptions(data[0]);
 }
 
 function createStateButtons(data, state)
@@ -49,7 +47,7 @@ function createStateButtons(data, state)
 
     // Add event listener to load the game data
     button.addEventListener('click', () => {
-        populateTippingDropdownMenuOptions(data);
+        window.CustomLibrary.populateTippingDropdownMenuOptions(data);
     })
 }
 
