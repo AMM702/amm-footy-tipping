@@ -1,5 +1,7 @@
-export function populateTippingDropdownMenuOptions(gameData)
+export function populateTippingDropdownMenuOptions(jsonData)
 {
+    if (!jsonData) throw Error("Game data was not defined.");
+
     // Select elements to modify
     const dropdownOptions = document.getElementById('tippingRoundListOptions');
     const dropdownLabel = document.getElementById('tippingRoundDisplayText');
@@ -11,9 +13,6 @@ export function populateTippingDropdownMenuOptions(gameData)
 
     // Clear existing items
     dropdownOptions.innerHTML = '';
-
-    // Extract JSON data
-    const jsonData = gameData["data"]
 
     // Add options to menu
     jsonData.forEach(roundData => {
