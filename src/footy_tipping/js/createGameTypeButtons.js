@@ -54,16 +54,16 @@ function createStateButtons(data, state, div)
         switch (state)
         {
             case 'QLD':
-                gameName.textContent = 'NRL - QLD';
+                gameName.textContent = 'NRL - QLD Comp';
                 break;
             case 'NSW':
-                gameName.textContent = 'NRL - NSW';
+                gameName.textContent = 'NRL - NSW Comp';
                 break;
             case 'VIC':
-                gameName.textContent = 'AFL - VIC';
+                gameName.textContent = 'AFL - VIC Comp';
                 break;
             case 'WA':
-                gameName.textContent = 'AFL - WA';
+                gameName.textContent = 'AFL - WA Comp';
                 break;
             default:
                 break;
