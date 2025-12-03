@@ -12,14 +12,14 @@ export function createGameTypeButtons(gameData)
 
     dataKeys.forEach(key => {
         const state = key.toUpperCase();
-        createStateButtons(gameData[key], state);
+        createStateButtons(gameData[key], state, buttonDiv);
     });
 
     // Default to first data type
     window.CustomLibrary.populateTippingDropdownMenuOptions(gameData[dataKeys[0]]);
 }
 
-function createStateButtons(data, state)
+function createStateButtons(data, state, div)
 {
     if (!data) return;
 
@@ -51,6 +51,8 @@ function createStateButtons(data, state)
     button.addEventListener('click', () => {
         window.CustomLibrary.populateTippingDropdownMenuOptions(data);
     })
+
+    div.appendChild(button);
 }
 
 window.CustomLibrary = window.CustomLibrary || {};
