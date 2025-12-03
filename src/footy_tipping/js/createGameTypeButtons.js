@@ -10,7 +10,7 @@ export function createGameTypeButtons(gameData)
 
     dataKeys.forEach(key => {
         const state = key.toUpperCase();
-        createStateButtons(data[key], state);
+        createStateButtons(gameData[key], state);
     });
 
     // Default to first data type
