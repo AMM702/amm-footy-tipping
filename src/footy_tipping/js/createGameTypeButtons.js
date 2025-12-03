@@ -10,10 +10,13 @@ export function createGameTypeButtons(gameData)
     console.log(gameData);
     console.log(dataKeys);
 
-    dataKeys.forEach(key => {
-        const state = key.toUpperCase();
-        createStateButtons(gameData[key], state, buttonDiv);
-    });
+    if (dataKeys.length > 1) // Only create the buttons if there is more than 1 comp
+    {
+        dataKeys.forEach(key => {
+            const state = key.toUpperCase();
+            createStateButtons(gameData[key], state, buttonDiv);
+        });
+    }
 
     // Default to first data type
     window.CustomLibrary.populateTippingDropdownMenuOptions(gameData[dataKeys[0]]);
