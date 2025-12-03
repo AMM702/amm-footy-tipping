@@ -2,6 +2,7 @@ export function createGameTypeButtons(gameData)
 {
     // Select button div
     const buttonDiv = document.getElementById('state-buttons');
+    const compSelectionDiv = document.getElementById('comp-select-div')
     buttonDiv.innerHTML = '';
 
     // Select game data from sessionStorage
@@ -17,6 +18,7 @@ export function createGameTypeButtons(gameData)
             createStateButtons(gameData[key], state, buttonDiv);
         });
     }
+    else compSelectionDiv.innerHTML = '';
 
     // Default to first data type
     window.CustomLibrary.populateTippingDropdownMenuOptions(gameData[dataKeys[0]]);
