@@ -14,7 +14,7 @@ export function createGameTypeButtons(gameData)
     });
 
     // Default to first data type
-    window.CustomLibrary.populateTippingDropdownMenuOptions(data[0]);
+    window.CustomLibrary.populateTippingDropdownMenuOptions(gameData[0]);
 }
 
 function createStateButtons(data, state)
