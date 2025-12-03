@@ -36,10 +36,14 @@
   border: 1px;
   border-color: black;
   border-style: solid;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .qld-button {
-  background-color: maroon;
+  background-color: firebrick;
 }
 
 .nsw-button {
