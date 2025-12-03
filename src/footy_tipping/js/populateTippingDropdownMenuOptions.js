@@ -14,6 +14,7 @@ export function populateTippingDropdownMenuOptions(jsonData)
 
     // Extract JSON data
     //const jsonData = gameData["data"]
+    console.log(jsonData);
 
     // Add options to menu
     jsonData.forEach(roundData => {
