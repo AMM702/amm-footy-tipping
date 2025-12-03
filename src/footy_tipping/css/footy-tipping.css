@@ -30,3 +30,30 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+.state-button {
+  border-radius: 5px;
+  border: 1px;
+  border-color: black;
+  border-style: solid;
+}
+
+.qld-button {
+  background-color: maroon;
+}
+
+.nsw-button {
+  background-color: skyblue;
+}
+
+.vic-button {
+  background-color: navy;
+}
+
+.wa-button {
+  background-color: gold;
+}
+
+.unknown-state {
+  background-color: var(--ammgreen);
+}

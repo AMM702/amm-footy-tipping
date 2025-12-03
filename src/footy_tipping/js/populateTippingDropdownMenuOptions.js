@@ -1,4 +1,4 @@
-export function populateTippingDropdownMenuOptions(gameData)
+export function populateTippingDropdownMenuOptions(jsonData)
 {
     // Select elements to modify
     const dropdownOptions = document.getElementById('tippingRoundListOptions');
@@ -13,7 +13,7 @@ export function populateTippingDropdownMenuOptions(gameData)
     dropdownOptions.innerHTML = '';
 
     // Extract JSON data
-    const jsonData = gameData["data"]
+    //const jsonData = gameData["data"]
 
     // Add options to menu
     jsonData.forEach(roundData => {

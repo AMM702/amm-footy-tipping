@@ -1,5 +1,5 @@
 const gameData = {
-    data: [
+    qld: [
         {
             round: 1,
             isRoundOn: false,
