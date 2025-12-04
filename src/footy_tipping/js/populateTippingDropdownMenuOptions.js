@@ -1,4 +1,4 @@
-export function populateTippingDropdownMenuOptions(jsonData)
+export function populateTippingDropdownMenuOptions(jsonData, state)
 {
     if (!jsonData) throw Error("Game data was not defined.");
 
@@ -47,7 +47,7 @@ export function populateTippingDropdownMenuOptions(jsonData)
         if (roundData.isRoundOn)
         {
             const name = `Round ${roundData.round}`
-            populateGameData(roundData, tippingForm, dropdownLabel, leagueLabel, name);
+            populateGameData(roundData, tippingForm, dropdownLabel, leagueLabel, name, state);
             displayLeagueTable(roundData);
             hasSwitch = true;
             break;
@@ -57,12 +57,12 @@ export function populateTippingDropdownMenuOptions(jsonData)
     // Default to the first round if no round is switched on
     if (!hasSwitch)
     {
-        populateGameData(jsonData[0], tippingForm, dropdownLabel, leagueLabel, `Round ${jsonData[0].round}`);
+        populateGameData(jsonData[0], tippingForm, dropdownLabel, leagueLabel, `Round ${jsonData[0].round}`, state);
         displayLeagueTable(jsonData[0])
     }
 };
 
-function populateGameData(roundData, formID, labelID, leagueLabelID, roundName)
+function populateGameData(roundData, formID, labelID, leagueLabelID, roundName, state)
 {
     // Update dropdown menu label
     labelID.textContent = roundName;
@@ -84,6 +84,13 @@ function populateGameData(roundData, formID, labelID, leagueLabelID, roundName)
     // Create game elements
     displayHomeAwayHeader();
     roundData.matches.forEach(g => window.CustomLibrary.createGameFormElements(g));
+
+    // Create comp identifier input
+    const compIdentity = document.createElement('input');
+    compIdentity.type = 'hidden';
+    compIdentity.name = 'comp';
+    compIdentity.value = state;
+    formID.appendChild(compIdentity);
 };
 
 function displayHomeAwayHeader()

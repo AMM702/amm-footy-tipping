@@ -20,7 +20,7 @@ export function createGameTypeButtons(gameData)
     else compSelectionDiv.style.display = 'none';
 
     // Default to first data type
-    window.CustomLibrary.populateTippingDropdownMenuOptions(gameData[dataKeys[0]]);
+    window.CustomLibrary.populateTippingDropdownMenuOptions(gameData[dataKeys[0]], datakeys[0]);
     switch (dataKeys[0])
     {
         case 'qld':
@@ -69,7 +69,7 @@ function createStateButtons(data, state, div)
 
     // Add event listener to load the game data
     button.addEventListener('click', () => {
-        window.CustomLibrary.populateTippingDropdownMenuOptions(data);
+        window.CustomLibrary.populateTippingDropdownMenuOptions(data, state.toLowerCase());
         switch (state)
         {
             case 'QLD':
