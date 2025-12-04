@@ -31,7 +31,7 @@ export function populateTippingDropdownMenuOptions(jsonData, state)
                 event.preventDefault();
 
                 // Add games to form
-                populateGameData(roundData, tippingForm, dropdownLabel, leagueLabel, roundName)
+                populateGameData(roundData, tippingForm, dropdownLabel, leagueLabel, roundName, state)
 
                 // Display round scores
                 displayLeagueTable(roundData);
