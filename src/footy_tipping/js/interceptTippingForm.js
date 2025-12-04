@@ -10,6 +10,7 @@ export function interceptTippingForm()
         const data = Object.fromEntries(formData.entries());
 
         console.table(data);
+        console.log(data);
     });
 };
 
