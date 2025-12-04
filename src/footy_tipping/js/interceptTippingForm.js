@@ -19,16 +19,19 @@ export function interceptTippingForm()
             if (!data.hasOwnProperty(key)) continue;
 
             let value = data[key];
-            
+
             if (key != 'comp')
             {
                 jsonData.games[key] = value;
             }
         }
 
-        console.table(data);
-        console.log(data);
-        console.log(jsonData)
+        // Convert jsonData into a string that can be sent to the backend
+        const jsonString = JSON.stringify(jsonData);
+
+        console.log(jsonData);
+        console.log(jsonString);
+        
     });
 };
 
