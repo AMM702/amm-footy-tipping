@@ -16,7 +16,10 @@ export function interceptTippingForm()
 
         for (let key in data)
         {
+            if (!data.hasOwnProperty(key)) continue;
+
             let value = data[key];
+            
             if (key != 'comp')
             {
                 jsonData.games[key] = value;
