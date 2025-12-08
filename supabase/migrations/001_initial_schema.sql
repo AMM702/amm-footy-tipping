@@ -1,36 +1,210 @@
 -- Purpose: Initial schema for footy tipping application
 -- Author: GitHub Copilot
 -- Date: 2025-12-08
--- Description: Creates users table with authentication and profile data
+-- Description: Complete baseline schema before multi-competition changes
 
--- Create users table
-CREATE TABLE public.users (
-    user_id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    auth_user_id uuid,
-    first_name character varying(100) NOT NULL,
-    surname character varying(100) NOT NULL,
-    email character varying(255) NOT NULL,
-    username character varying(50) NOT NULL,
-    password_hash character varying(255) NOT NULL,
-    state character varying(3) NOT NULL,
-    is_admin boolean DEFAULT false,
-    created_at timestamp with time zone DEFAULT now(),
-    updated_at timestamp with time zone DEFAULT now()
+-- Enable UUID extension
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- =====================================================
+-- 1. USERS TABLE
+-- =====================================================
+CREATE TABLE users (
+  user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  first_name VARCHAR(100) NOT NULL,
+  surname VARCHAR(100) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  state VARCHAR(3) NOT NULL CHECK (state IN ('QLD', 'NSW', 'VIC', 'WA')),
+  is_admin BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Add unique constraints
-ALTER TABLE public.users
-ADD CONSTRAINT users_email_key UNIQUE (email);
+CREATE INDEX idx_users_state ON users(state);
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_username ON users(username);
 
-ALTER TABLE public.users
-ADD CONSTRAINT users_username_key UNIQUE (username);
+-- =====================================================
+-- 2. TEAMS TABLE
+-- =====================================================
+CREATE TABLE teams (
+  team_id SERIAL PRIMARY KEY,
+  team_name VARCHAR(100) NOT NULL UNIQUE,
+  team_abbreviation VARCHAR(10),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
 
--- Create indexes for performance
-CREATE INDEX idx_users_auth_id ON public.users USING btree (auth_user_id);
-CREATE INDEX idx_users_email ON public.users USING btree (email);
-CREATE INDEX idx_users_username ON public.users USING btree (username);
+CREATE UNIQUE INDEX idx_teams_name ON teams(team_name);
 
--- Add comments
-COMMENT ON TABLE public.users IS 'Stores user account information for footy tipping application';
-COMMENT ON COLUMN public.users.auth_user_id IS 'Reference to Supabase Auth user (if using Supabase Auth)';
-COMMENT ON COLUMN public.users.state IS 'Australian state abbreviation (NSW, VIC, QLD, etc.)';
+-- =====================================================
+-- 2b. SEASONS TABLE
+-- =====================================================
+CREATE TABLE seasons (
+  season_id SERIAL PRIMARY KEY,
+  season_name VARCHAR(100) NOT NULL UNIQUE,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE UNIQUE INDEX idx_seasons_name ON seasons(season_name);
+
+-- =====================================================
+-- 3. ROUNDS TABLE
+-- =====================================================
+CREATE TABLE rounds (
+  round_id SERIAL PRIMARY KEY,
+  round_number INTEGER NOT NULL UNIQUE,
+  round_name VARCHAR(100) NOT NULL,
+  season_id INTEGER REFERENCES seasons(season_id),
+  is_round_on BOOLEAN DEFAULT FALSE,
+  catch_up_game_id INTEGER,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_rounds_number ON rounds(round_number);
+CREATE INDEX idx_rounds_is_on ON rounds(is_round_on);
+
+-- =====================================================
+-- 4. GAMES TABLE
+-- =====================================================
+CREATE TABLE games (
+  game_id SERIAL PRIMARY KEY,
+  round_id INTEGER NOT NULL REFERENCES rounds(round_id) ON DELETE CASCADE,
+  game_number INTEGER NOT NULL,
+  home_team_id INTEGER NOT NULL REFERENCES teams(team_id),
+  away_team_id INTEGER NOT NULL REFERENCES teams(team_id),
+  game_date DATE NOT NULL,
+  game_time VARCHAR(20),
+  ground VARCHAR(100),
+  result INTEGER CHECK (result IN (1, 2)) DEFAULT NULL,
+  is_tippable BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  CONSTRAINT unique_game_per_round UNIQUE (round_id, game_number),
+  CONSTRAINT different_teams CHECK (home_team_id != away_team_id)
+);
+
+CREATE INDEX idx_games_round ON games(round_id);
+CREATE INDEX idx_games_date ON games(game_date);
+CREATE INDEX idx_games_result ON games(result);
+CREATE INDEX idx_games_tippable ON games(is_tippable);
+
+-- Add FK for catch_up_game_id after games table exists
+ALTER TABLE rounds ADD CONSTRAINT fk_rounds_catch_up_game 
+  FOREIGN KEY (catch_up_game_id) REFERENCES games(game_id);
+
+-- =====================================================
+-- 5. TIPS TABLE
+-- =====================================================
+CREATE TABLE tips (
+  tip_id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+  game_id INTEGER NOT NULL REFERENCES games(game_id) ON DELETE CASCADE,
+  tip INTEGER NOT NULL CHECK (tip IN (1, 2)),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  CONSTRAINT unique_user_game_tip UNIQUE (user_id, game_id)
+);
+
+CREATE INDEX idx_tips_user ON tips(user_id);
+CREATE INDEX idx_tips_game ON tips(game_id);
+CREATE INDEX idx_tips_user_game ON tips(user_id, game_id);
+
+-- =====================================================
+-- 6. SCORES TABLE
+-- =====================================================
+CREATE TABLE scores (
+  score_id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+  round_id INTEGER NOT NULL REFERENCES rounds(round_id) ON DELETE CASCADE,
+  score INTEGER DEFAULT 0,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  CONSTRAINT unique_user_round_score UNIQUE (user_id, round_id)
+);
+
+CREATE INDEX idx_scores_user ON scores(user_id);
+CREATE INDEX idx_scores_round ON scores(round_id);
+CREATE INDEX idx_scores_user_round ON scores(user_id, round_id);
+
+-- =====================================================
+-- TRIGGERS AND FUNCTIONS
+-- =====================================================
+
+-- Function to update updated_at timestamp
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Apply triggers to all tables
+CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_games_updated_at BEFORE UPDATE ON games
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_rounds_updated_at BEFORE UPDATE ON rounds
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_tips_updated_at BEFORE UPDATE ON tips
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_scores_updated_at BEFORE UPDATE ON scores
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Function to calculate user score for a round
+CREATE OR REPLACE FUNCTION calculate_round_score(p_user_id UUID, p_round_id INTEGER)
+RETURNS INTEGER AS $$
+DECLARE
+  v_score INTEGER;
+BEGIN
+  SELECT COUNT(*)
+  INTO v_score
+  FROM tips t
+  JOIN games g ON t.game_id = g.game_id
+  WHERE t.user_id = p_user_id
+    AND g.round_id = p_round_id
+    AND g.result IS NOT NULL
+    AND (
+      (t.tip = 1 AND g.result = 1) OR
+      (t.tip = 2 AND g.result = 2)
+    );
+  
+  RETURN COALESCE(v_score, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Auto-update scores when game results change
+CREATE OR REPLACE FUNCTION update_scores_on_game_result()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF (OLD.result IS DISTINCT FROM NEW.result) AND NEW.result IS NOT NULL THEN
+    INSERT INTO scores (user_id, round_id, score)
+    SELECT 
+      u.user_id,
+      NEW.round_id,
+      calculate_round_score(u.user_id, NEW.round_id)
+    FROM users u
+    ON CONFLICT (user_id, round_id)
+    DO UPDATE SET 
+      score = calculate_round_score(scores.user_id, scores.round_id),
+      updated_at = NOW();
+  END IF;
+  
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_update_scores_on_game_result
+  AFTER UPDATE ON games
+  FOR EACH ROW
+  EXECUTE FUNCTION update_scores_on_game_result();
