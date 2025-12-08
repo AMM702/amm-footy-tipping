@@ -154,6 +154,7 @@ function displayLeagueTable(roundData)
     else if (roundResultsDiv !== '')
     {
         roundResultsDiv.innerHTML = '';
+        hiddenScoreText.textContent = 'Scores will be revealed after the last game of the regular season. Best of luck!';
     }
 };
 
