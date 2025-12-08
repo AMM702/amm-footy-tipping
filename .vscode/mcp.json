@@ -1,0 +1,9 @@
+{
+	"servers": {
+		"supabase amm-footy": {
+			"url": "https://mcp.supabase.com/mcp?project_ref=fsrjxbeoyfpybkzfqlcz",
+			"type": "http"
+		}
+	},
+	"inputs": []
+}
