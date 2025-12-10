@@ -576,7 +576,7 @@ git push origin main
 **Resolution:**
 1. **Configured GitHub Secrets:**
    ```bash
-   gh secret set SUPABASE_ACCESS_TOKEN  # Value: sbp_5e77d7a7621bd7e97252cd9aaa9031d3b6e495c8
+   gh secret set SUPABASE_ACCESS_TOKEN  # Value: sbp_xxxxxxxxxxxxxxxxxxxx (get from Supabase dashboard)
    gh secret set SUPABASE_PROJECT_ID    # Value: fsrjxbeoyfpybkzfqlcz
    ```
 
