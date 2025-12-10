@@ -1,1 +1,16 @@
 *.testdata.js
+
+# Environment variables - contains sensitive data
+.env
+.env.local
+.env.*.local
+
+# VS Code MCP configuration - contains project references
+.vscode/mcp.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
