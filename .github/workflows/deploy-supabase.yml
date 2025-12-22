@@ -32,3 +32,50 @@ jobs:
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+      
+      - name: Verify migration success
+        run: |
+          echo "Verifying schema migration..."
+          
+          # Query to check which schema contains application tables
+          VERIFICATION_QUERY="
+          SELECT 
+            schemaname, 
+            tablename,
+            CASE 
+              WHEN schemaname = 'app_data' THEN '✅'
+              WHEN schemaname = 'public' THEN '❌'
+              ELSE '⚠️'
+            END as status
+          FROM pg_tables 
+          WHERE tablename IN ('users', 'teams', 'seasons', 'rounds', 'games', 'tips', 'scores', 'comps', 'user_comps')
+          ORDER BY schemaname, tablename;
+          "
+          
+          # Execute verification query
+          RESULT=$(supabase db execute --query "$VERIFICATION_QUERY" 2>&1)
+          echo "$RESULT"
+          
+          # Check if any tables are still in public schema
+          if echo "$RESULT" | grep -q "public.*\(users\|teams\|seasons\|rounds\|games\|tips\|scores\|comps\|user_comps\)"; then
+            echo "::error::Migration incomplete! Application tables still exist in public schema."
+            exit 1
+          fi
+          
+          # Count tables in app_data schema
+          TABLE_COUNT=$(echo "$RESULT" | grep -c "app_data" || echo "0")
+          
+          if [ "$TABLE_COUNT" -eq 9 ]; then
+            echo "::notice::✅ All 9 application tables successfully migrated to app_data schema"
+          elif [ "$TABLE_COUNT" -gt 0 ]; then
+            echo "::warning::⚠️ Partial migration: $TABLE_COUNT tables in app_data (expected 9)"
+            exit 1
+          else
+            echo "::error::❌ No tables found in app_data schema"
+            exit 1
+          fi
+          
+          echo "Schema migration verification completed successfully!"
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}

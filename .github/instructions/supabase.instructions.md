@@ -616,3 +616,238 @@ git push origin main
 3. Use MCP server tools (`mcp_supabase_amm-_execute_sql`) to query production database structure
 4. Check `supabase migration list` to verify which migrations are marked as applied
 5. Production database is the source of truth - local schema files are reference only
+---
+
+### December 22, 2025 - Schema Migration to app_data
+
+**Issue:** All application tables were in the `public` schema, which is less secure and harder to manage for permissions and isolation.
+
+**Solution:** Created migration 009 to move all tables to dedicated `app_data` schema.
+
+**Changes Made:**
+
+1. **Created Migration 009** (`supabase/migrations/009_create_app_data_schema.sql`):
+   - Created `app_data` schema
+   - Moved all 9 tables from `public` to `app_data` using `ALTER TABLE SET SCHEMA`
+   - Recreated 3 functions with schema-qualified table names
+   - Recreated all 6 triggers to point to new function locations
+   - Added appropriate GRANT permissions for authenticated and anon roles
+   - Zero-downtime migration (data preserved during schema move)
+
+2. **Updated Supabase Config** (`supabase/config.toml`):
+   - Added `app_data` to exposed schemas: `schemas = ["public", "app_data", "graphql_public"]`
+   - Added `app_data` to search_path (first priority): `extra_search_path = ["app_data", "public", "extensions"]`
+   - This allows unqualified table names to resolve to `app_data` first
+
+3. **Updated GitHub Actions Workflow** (`.github/workflows/deploy-supabase.yml`):
+   - Added post-deployment verification step
+   - Queries `information_schema.tables` to confirm all tables in `app_data`
+   - Fails workflow if any application tables remain in `public` schema
+
+**Tables Migrated:**
+- ✅ users (with triggers)
+- ✅ comps (competition reference)
+- ✅ user_comps (junction table)
+- ✅ teams (NRL teams)
+- ✅ seasons (competition years)
+- ✅ rounds (game rounds)
+- ✅ games (individual matches)
+- ✅ tips (user predictions)
+- ✅ scores (user round scores)
+
+**Functions Migrated:**
+- ✅ `update_updated_at_column()` → `app_data.update_updated_at_column()`
+- ✅ `calculate_round_score(UUID, INTEGER, INTEGER)` → `app_data.calculate_round_score()`
+- ✅ `update_scores_on_game_result()` → `app_data.update_scores_on_game_result()`
+
+**Verification Steps (Using Supabase MCP - AFTER deployment):**
+
+```javascript
+// 1. Verify all tables are in app_data schema
+mcp_supabase_amm-_execute_sql({
+  query: `
+    SELECT schemaname, tablename 
+    FROM pg_tables 
+    WHERE schemaname IN ('public', 'app_data')
+      AND tablename IN ('users', 'teams', 'seasons', 'rounds', 'games', 
+                       'tips', 'scores', 'comps', 'user_comps')
+    ORDER BY schemaname, tablename;
+  `
+})
+// Expected: All 9 tables should show schemaname = 'app_data'
+
+// 2. List tables in app_data schema
+mcp_supabase_amm-_list_tables({
+  schemas: ["app_data"]
+})
+// Expected: 9 tables (users, teams, seasons, rounds, games, tips, scores, comps, user_comps)
+
+// 3. Verify functions are in app_data schema
+mcp_supabase_amm-_execute_sql({
+  query: `
+    SELECT n.nspname as schema, p.proname as function_name
+    FROM pg_proc p
+    JOIN pg_namespace n ON p.pronamespace = n.oid
+    WHERE n.nspname IN ('public', 'app_data')
+      AND p.proname IN ('update_updated_at_column', 
+                       'calculate_round_score', 
+                       'update_scores_on_game_result')
+    ORDER BY schema, function_name;
+  `
+})
+// Expected: All 3 functions should show schema = 'app_data'
+
+// 4. Verify all triggers are functioning
+mcp_supabase_amm-_execute_sql({
+  query: `
+    SELECT 
+      n.nspname as schema,
+      c.relname as table_name,
+      t.tgname as trigger_name
+    FROM pg_trigger t
+    JOIN pg_class c ON t.tgrelid = c.oid
+    JOIN pg_namespace n ON c.relnamespace = n.oid
+    WHERE n.nspname = 'app_data'
+      AND NOT t.tgisinternal
+    ORDER BY table_name, trigger_name;
+  `
+})
+// Expected: 6 triggers across 5 tables (users, games, rounds, tips, scores)
+
+// 5. Verify row counts preserved
+mcp_supabase_amm-_execute_sql({
+  query: `
+    SELECT 'users' as table_name, COUNT(*) as row_count FROM app_data.users
+    UNION ALL SELECT 'teams', COUNT(*) FROM app_data.teams
+    UNION ALL SELECT 'seasons', COUNT(*) FROM app_data.seasons
+    UNION ALL SELECT 'rounds', COUNT(*) FROM app_data.rounds
+    UNION ALL SELECT 'games', COUNT(*) FROM app_data.games
+    UNION ALL SELECT 'tips', COUNT(*) FROM app_data.tips
+    UNION ALL SELECT 'scores', COUNT(*) FROM app_data.scores
+    UNION ALL SELECT 'comps', COUNT(*) FROM app_data.comps
+    UNION ALL SELECT 'user_comps', COUNT(*) FROM app_data.user_comps
+    ORDER BY table_name;
+  `
+})
+// Compare with pre-migration counts to ensure no data loss
+
+// 6. Test a function to ensure it's working
+mcp_supabase_amm-_execute_sql({
+  query: `
+    -- Test calculate_round_score function (if data exists)
+    SELECT app_data.calculate_round_score(
+      (SELECT user_id FROM app_data.users LIMIT 1),
+      (SELECT round_id FROM app_data.rounds LIMIT 1),
+      (SELECT comp_id FROM app_data.comps LIMIT 1)
+    ) as test_score;
+  `
+})
+// Expected: Returns a number (score) without error
+```
+
+**Rollback Procedure (Emergency Recovery):**
+
+If migration causes issues, rollback with migration 010:
+
+```sql
+-- supabase/migrations/010_rollback_to_public_schema.sql
+BEGIN;
+
+-- Move tables back to public
+ALTER TABLE app_data.users SET SCHEMA public;
+ALTER TABLE app_data.comps SET SCHEMA public;
+ALTER TABLE app_data.user_comps SET SCHEMA public;
+ALTER TABLE app_data.teams SET SCHEMA public;
+ALTER TABLE app_data.seasons SET SCHEMA public;
+ALTER TABLE app_data.rounds SET SCHEMA public;
+ALTER TABLE app_data.games SET SCHEMA public;
+ALTER TABLE app_data.tips SET SCHEMA public;
+ALTER TABLE app_data.scores SET SCHEMA public;
+
+-- Recreate functions in public schema
+CREATE OR REPLACE FUNCTION public.update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION public.calculate_round_score(
+    p_user_id UUID, p_round_id INTEGER, p_comp_id INTEGER
+)
+RETURNS INTEGER AS $$
+DECLARE v_score INTEGER;
+BEGIN
+    SELECT COUNT(*) INTO v_score
+    FROM public.tips t
+    JOIN public.games g ON t.game_id = g.game_id
+    WHERE t.user_id = p_user_id
+      AND g.round_id = p_round_id
+      AND t.comp_id = p_comp_id
+      AND g.game_result IS NOT NULL
+      AND t.tip = g.game_result;
+    RETURN COALESCE(v_score, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION public.update_scores_on_game_result()
+RETURNS TRIGGER AS $$
+DECLARE
+    v_round_id INTEGER;
+    v_user_record RECORD;
+BEGIN
+    IF OLD.game_result IS DISTINCT FROM NEW.game_result THEN
+        v_round_id := NEW.round_id;
+        FOR v_user_record IN 
+            SELECT DISTINCT uc.user_id, uc.comp_id FROM public.user_comps uc
+        LOOP
+            INSERT INTO public.scores (user_id, round_id, comp_id, round_score)
+            VALUES (
+                v_user_record.user_id, v_round_id, v_user_record.comp_id,
+                public.calculate_round_score(v_user_record.user_id, v_round_id, v_user_record.comp_id)
+            )
+            ON CONFLICT (user_id, round_id, comp_id)
+            DO UPDATE SET 
+                round_score = public.calculate_round_score(v_user_record.user_id, v_round_id, v_user_record.comp_id),
+                updated_at = CURRENT_TIMESTAMP;
+        END LOOP;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Recreate triggers
+DROP TRIGGER IF EXISTS update_users_updated_at ON public.users;
+DROP TRIGGER IF EXISTS update_games_updated_at ON public.games;
+DROP TRIGGER IF EXISTS update_rounds_updated_at ON public.rounds;
+DROP TRIGGER IF EXISTS update_tips_updated_at ON public.tips;
+DROP TRIGGER IF EXISTS update_scores_updated_at ON public.scores;
+DROP TRIGGER IF EXISTS trigger_update_scores_on_game_result ON public.games;
+
+CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON public.users FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+CREATE TRIGGER update_games_updated_at BEFORE UPDATE ON public.games FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+CREATE TRIGGER update_rounds_updated_at BEFORE UPDATE ON public.rounds FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+CREATE TRIGGER update_tips_updated_at BEFORE UPDATE ON public.tips FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+CREATE TRIGGER update_scores_updated_at BEFORE UPDATE ON public.scores FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+CREATE TRIGGER trigger_update_scores_on_game_result AFTER UPDATE ON public.games FOR EACH ROW EXECUTE FUNCTION public.update_scores_on_game_result();
+
+-- Drop app_data schema
+DROP SCHEMA app_data CASCADE;
+
+COMMIT;
+```
+
+Also revert `supabase/config.toml`:
+```toml
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+```
+
+**Key Learnings:**
+1. `ALTER TABLE SET SCHEMA` is fast and preserves all data, indexes, and constraints
+2. Functions must be recreated with schema-qualified table names
+3. Triggers must be dropped and recreated to point to new function schema
+4. Setting `app_data` first in `extra_search_path` allows backward-compatible unqualified table names
+5. Always verify with MCP tools AFTER deployment, never use MCP for actual deployment
+6. GitHub Actions handles deployment; MCP is for verification and debugging only
