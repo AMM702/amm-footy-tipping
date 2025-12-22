@@ -1,0 +1,15 @@
+-- supabase/migrations/010_placeholder_for_accidental_rollback.sql
+-- Purpose: Placeholder for migration 010 which was accidentally deployed and then removed
+-- Author: GitHub Copilot
+-- Date: 2025-12-23
+--
+-- Migration 010 was originally a rollback migration that got auto-deployed by mistake.
+-- It moved tables from app_data back to public schema.
+-- This file exists as a placeholder so the migration history stays consistent.
+-- Migration 011 re-applies the app_data schema migration.
+--
+-- This migration does nothing - it's just a placeholder.
+
+-- No operations needed
+-- Migration 010 already ran and moved tables to public
+-- Migration 011 will move them back to app_data
