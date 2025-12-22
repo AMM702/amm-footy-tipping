@@ -1,25 +1,12 @@
--- supabase/migrations/010_rollback_to_public_schema.sql
--- Purpose: EMERGENCY ROLLBACK - Move all tables back from app_data to public schema
--- Author: GitHub Copilot
--- Date: 2025-12-22
+-- EMERGENCY ROLLBACK MIGRATION
+-- Purpose: Move all tables back from app_data to public schema
 -- 
--- ⚠️ WARNING: Only use this migration if migration 009 causes critical issues
--- 
--- This migration reverses the schema migration performed in 009 by:
--- 1. Moving all tables back to public schema
--- 2. Recreating functions in public schema
--- 3. Recreating triggers to point to public schema functions
--- 4. Dropping the app_data schema
+-- ⚠️ WARNING: DO NOT place this file in supabase/migrations/ folder!
+-- This file must be manually copied/renamed when needed for emergency rollback.
 --
--- After running this migration, also revert supabase/config.toml changes:
---   schemas = ["public", "graphql_public"]
---   extra_search_path = ["public", "extensions"]
+-- See supabase/rollback/README.md for usage instructions.
 
 BEGIN;
-
--- ============================================================================
--- PHASE 1: Move tables back to public schema
--- ============================================================================
 
 -- Move all tables from app_data back to public
 ALTER TABLE IF EXISTS app_data.users SET SCHEMA public;
@@ -32,12 +19,7 @@ ALTER TABLE IF EXISTS app_data.games SET SCHEMA public;
 ALTER TABLE IF EXISTS app_data.tips SET SCHEMA public;
 ALTER TABLE IF EXISTS app_data.scores SET SCHEMA public;
 
-
--- ============================================================================
--- PHASE 2: Recreate functions in public schema
--- ============================================================================
-
--- Function 1: update_updated_at_column()
+-- Recreate functions in public schema
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -46,10 +28,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-COMMENT ON FUNCTION public.update_updated_at_column() IS 'Automatically updates the updated_at timestamp on row modification';
-
-
--- Function 2: calculate_round_score(user_id, round_id, comp_id)
 CREATE OR REPLACE FUNCTION public.calculate_round_score(
     p_user_id UUID,
     p_round_id INTEGER,
@@ -73,10 +51,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-COMMENT ON FUNCTION public.calculate_round_score(UUID, INTEGER, INTEGER) IS 'Calculates the number of correct tips for a user in a specific round and competition';
-
-
--- Function 3: update_scores_on_game_result()
 CREATE OR REPLACE FUNCTION public.update_scores_on_game_result()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -108,14 +82,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-COMMENT ON FUNCTION public.update_scores_on_game_result() IS 'Automatically recalculates all user scores when a game result is updated';
-
-
--- ============================================================================
--- PHASE 3: Recreate triggers with public schema function references
--- ============================================================================
-
--- Drop old triggers (pointing to app_data functions)
+-- Drop old triggers
 DROP TRIGGER IF EXISTS update_users_updated_at ON public.users;
 DROP TRIGGER IF EXISTS update_games_updated_at ON public.games;
 DROP TRIGGER IF EXISTS update_rounds_updated_at ON public.rounds;
@@ -154,29 +121,12 @@ CREATE TRIGGER trigger_update_scores_on_game_result
     FOR EACH ROW
     EXECUTE FUNCTION public.update_scores_on_game_result();
 
-
--- ============================================================================
--- PHASE 4: Clean up app_data schema
--- ============================================================================
-
 -- Drop app_data schema functions
 DROP FUNCTION IF EXISTS app_data.update_updated_at_column() CASCADE;
 DROP FUNCTION IF EXISTS app_data.calculate_round_score(UUID, INTEGER, INTEGER) CASCADE;
 DROP FUNCTION IF EXISTS app_data.update_scores_on_game_result() CASCADE;
 
--- Drop app_data schema (should be empty now)
+-- Drop app_data schema
 DROP SCHEMA IF EXISTS app_data CASCADE;
 
 COMMIT;
-
--- ============================================================================
--- POST-ROLLBACK MANUAL STEPS
--- ============================================================================
-
--- After this migration completes, manually revert supabase/config.toml:
---
--- [api]
--- schemas = ["public", "graphql_public"]
--- extra_search_path = ["public", "extensions"]
---
--- Then commit and push the config change to complete the rollback.
