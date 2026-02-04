@@ -6,7 +6,6 @@ export function interceptTippingForm()
         e.preventDefault();
 
         const formData = new FormData(tippingFormID);
-        formData.delete("cf-turnstile-response");
         const data = Object.fromEntries(formData.entries());
 
         let jsonData = {
